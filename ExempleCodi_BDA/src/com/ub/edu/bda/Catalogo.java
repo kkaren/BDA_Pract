@@ -1,12 +1,13 @@
 package com.ub.edu.bda;
 
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 
 
 @Entity
 @Table(name="CATALOGO")
-public class Catalogo {
+public class Catalogo implements Serializable {
     @Id @GeneratedValue
     @Column(name="id")
     private Integer id ;
@@ -19,12 +20,10 @@ public class Catalogo {
     
     //afegim l'objecte Articulo amb cardinalitat N
     @Column(name="articulos")
-    @OneToMany(mappedBy = "catalogo")
     private Set<Articulo> articulos;
 
     //afegim l'objecte Catalogo amb cardinalitat N
     @Column(name="tiendas")
-    @ManyToMany(mappedBy = "catalogos")
     private Set<Tienda> tiendas;
 
 

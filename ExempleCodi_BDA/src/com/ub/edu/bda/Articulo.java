@@ -1,10 +1,11 @@
 package com.ub.edu.bda;
+import java.io.Serializable;
 import javax.persistence.*;
 
 
 @Entity
 @Table(name="ARTICULO")
-public class Articulo {
+public class Articulo implements Serializable {
     @Id @GeneratedValue
     @Column(name="id")
     private Integer id;
@@ -17,7 +18,6 @@ public class Articulo {
 
 // afegim l'objecte cataleg en cardinalitat 1
     @Column(name="catalogo")
-
     private Catalogo catalogo;
 
 
