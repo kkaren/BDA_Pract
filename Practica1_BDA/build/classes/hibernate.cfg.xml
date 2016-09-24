@@ -11,11 +11,17 @@
     <!-- Definimos que Hibernate cree las tablas none : no actualiza, update : act las dif, create :> machaca todo en la bd-->
     <!-- none, update, create -->
     <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.hbm2ddl.auto">create</property>
+    <property name="hibernate.hbm2ddl.auto">create-drop</property>
     <!-- Declaramos los archivos de mapping-->
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">db1</property>
-    <mapping class="com.ub.edu.bda.Articulo"/>
-    <mapping class="com.ub.edu.bda.Catalogo"/>
-    <mapping class="com.ub.edu.bda.Tienda"/>
+    <mapping package="practica1_bda"/>
+    <mapping class="practica1_bda.Aeroport"/>
+    <mapping class="practica1_bda.Avio"/>
+    <mapping class="practica1_bda.ModelAvio"/>
+    <mapping class="practica1_bda.Pilot"/>
+    <mapping class="practica1_bda.Ruta"/>
   </session-factory>
 </hibernate-configuration>

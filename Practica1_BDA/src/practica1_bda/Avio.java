@@ -21,25 +21,19 @@ public class Avio implements Serializable {
     @Column(name="matricula")
     private String matricula;
     
-    @Column(name="id_model")
-    private Integer id_model; // Relacio many-to-1
+    @ManyToOne
+    @JoinColumn(name="id model")
+    private ModelAvio modelAvio; // Relacio many-to-1
     
     public Avio() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public Avio(Integer id, String matricula, Integer id_model) {
-        super();
+    public Avio(Integer id, String matricula, ModelAvio modelAvio) {
         this.id = id;
         this.matricula = matricula;
-        this.id_model = id_model;
-    }
-    
-    public Avio(String matricula, Integer id_model) {
-        super();
-        this.matricula = matricula;
-        this.id_model = id_model;
+        this.modelAvio = modelAvio;
     }
 
     public Integer getId() {
@@ -58,12 +52,13 @@ public class Avio implements Serializable {
         this.matricula = matricula;
     }
 
-    public Integer getId_model() {
-        return id_model;
+    public ModelAvio getModelAvio() {
+        return modelAvio;
     }
 
-    public void setId_model(Integer id_model) {
-        this.id_model = id_model;
+    public void setModelAvio(ModelAvio modelAvio) {
+        this.modelAvio = modelAvio;
     }
-    
+
+ 
 }

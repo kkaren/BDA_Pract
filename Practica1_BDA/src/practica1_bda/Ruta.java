@@ -26,23 +26,28 @@ public class Ruta implements Serializable {
     @Column(name="hora")
     private Time hora;
     
-    @Column(name="id_aero_origen")
-    private Integer id_aero_origen; // Relacio n-1
+    @ManyToOne
+    @JoinColumn(name="Origen")
+    private Aeroport aeroport_origen; // Relacio n-1
     
-    @Column(name="id_aero_desti")
-    private Integer id_aero_desti; // Relacio n-1
+    @ManyToOne
+    @JoinColumn(name="Desti")
+    private Aeroport aeroport_desti; // Relacio n-1
     
-    @Column(name="id_model")
-    private Integer id_model; // Relacio n-1
+    @ManyToOne
+    @JoinColumn(name="Model")
+    private ModelAvio id_model; // Relacio n-1
     
     @Column(name="data")
     private Date data;
      
-    @Column(name="id_avio")
-    private Integer id_avio; // Relacio n-1
+    @ManyToOne
+    @JoinColumn(name="Avio")
+    private Avio id_avio; // Relacio n-1
      
-    @Column(name="id_pilot")
-    private Integer id_pilot; // Relacio n-1
+    @ManyToOne
+    @JoinColumn(name="Pilot")
+    private Pilot id_pilot; // Relacio n-1
      
     @Column(name="incidencies")
     private String incidencies;
@@ -52,30 +57,19 @@ public class Ruta implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public Ruta(Integer id, String dia, Time hora, Integer id_aero_origen,
-            Integer id_aero_desti, Integer id_model, Date data, Integer id_avio,
-            Integer id_pilot, String incidencies) {
-        super();
+    public Ruta(Integer id, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio id_model) {
+        this.id = id;
+        this.aeroport_origen = aeroport_origen;
+        this.aeroport_desti = aeroport_desti;
+        this.id_model = id_model;
+    }
+
+    public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio id_model, Date data, Avio id_avio, Pilot id_pilot, String incidencies) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
-        this.id_aero_origen = id_aero_origen;
-        this.id_aero_desti = id_aero_desti;
-        this.id_model = id_model;
-        this.data = data;
-        this.id_avio = id_avio;
-        this.id_pilot = id_pilot;
-        this.incidencies = incidencies;
-    }
-    
-    public Ruta(String dia, Time hora, Integer id_aero_origen,
-            Integer id_aero_desti, Integer id_model, Date data, Integer id_avio,
-            Integer id_pilot, String incidencies) {
-        super();
-        this.dia = dia;
-        this.hora = hora;
-        this.id_aero_origen = id_aero_origen;
-        this.id_aero_desti = id_aero_desti;
+        this.aeroport_origen = aeroport_origen;
+        this.aeroport_desti = aeroport_desti;
         this.id_model = id_model;
         this.data = data;
         this.id_avio = id_avio;
@@ -107,27 +101,27 @@ public class Ruta implements Serializable {
         this.hora = hora;
     }
 
-    public Integer getId_aero_origen() {
-        return id_aero_origen;
+    public Aeroport getAeroport_origen() {
+        return aeroport_origen;
     }
 
-    public void setId_aero_origen(Integer id_aero_origen) {
-        this.id_aero_origen = id_aero_origen;
+    public void setAeroport_origen(Aeroport aeroport_origen) {
+        this.aeroport_origen = aeroport_origen;
     }
 
-    public Integer getId_aero_desti() {
-        return id_aero_desti;
+    public Aeroport getAeroport_desti() {
+        return aeroport_desti;
     }
 
-    public void setId_aero_desti(Integer id_aero_desti) {
-        this.id_aero_desti = id_aero_desti;
+    public void setAeroport_desti(Aeroport aeroport_desti) {
+        this.aeroport_desti = aeroport_desti;
     }
 
-    public Integer getId_model() {
+    public ModelAvio getId_model() {
         return id_model;
     }
 
-    public void setId_model(Integer id_model) {
+    public void setId_model(ModelAvio id_model) {
         this.id_model = id_model;
     }
 
@@ -139,19 +133,19 @@ public class Ruta implements Serializable {
         this.data = data;
     }
 
-    public Integer getId_avio() {
+    public Avio getId_avio() {
         return id_avio;
     }
 
-    public void setId_avio(Integer id_avio) {
+    public void setId_avio(Avio id_avio) {
         this.id_avio = id_avio;
     }
 
-    public Integer getId_pilot() {
+    public Pilot getId_pilot() {
         return id_pilot;
     }
 
-    public void setId_pilot(Integer id_pilot) {
+    public void setId_pilot(Pilot id_pilot) {
         this.id_pilot = id_pilot;
     }
 
@@ -163,4 +157,5 @@ public class Ruta implements Serializable {
         this.incidencies = incidencies;
     }
 
+    
 }

@@ -27,34 +27,22 @@ public class Pilot implements Serializable {
     @Column(name="hores_vol")
     private Integer hores_vol;
     
-    @Column(name="id_aeroport")
-    private Integer id_aeroport; // Relacio many-to-one
+    @ManyToOne
+    private Aeroport aeroport; // Relacio many-to-one
 
     public Pilot() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public Pilot(Integer id, String nom, String cognom, Integer hores_vol,
-        Integer id_aeroport) {
-        super();
+    public Pilot(Integer id, String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
         this.id = id;
         this.nom = nom;
         this.cognom = cognom;
         this.hores_vol = hores_vol;
-        this.id_aeroport = id_aeroport;
+        this.aeroport = id_aeroport;
     }
-    
-    public Pilot(String nom, String cognom, Integer hores_vol,
-        Integer id_aeroport) {
-        super(); 
-        this.nom = nom;
-        this.cognom = cognom;
-        this.hores_vol = hores_vol;
-        this.id_aeroport = id_aeroport;
-    }
-    
-    
+
     public Integer getId() {
         return id;
     }
@@ -87,12 +75,13 @@ public class Pilot implements Serializable {
         this.hores_vol = hores_vol;
     }
 
-    public Integer getId_aeroport() {
-        return id_aeroport;
+    public Aeroport getAeroport() {
+        return aeroport;
     }
 
-    public void setId_aeroport(Integer id_aeroport) {
-        this.id_aeroport = id_aeroport;
+    public void setAeroport(Aeroport aeroport) {
+        this.aeroport = aeroport;
     }
+
 
 }
