@@ -29,10 +29,11 @@ public class TestHB {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
             Session session = getSessionFactory().openSession();
-            createAeroport(session);
-            createModelAvio(session);
-            createAvio(session);
-            createPilot(session);
+            Scanner sc = new Scanner(System.in);
+            createAeroport(session, sc);
+            createModelAvio(session, sc);
+            createAvio(session, sc);
+            createPilot(session, sc);
             session.close();
             /*	// TODO Auto-generated method stub
 		Session session = null;
@@ -85,41 +86,68 @@ public class TestHB {
             
         }
         
-        public static void createAeroport(Session session){
+        public static void createAeroport(Session session, Scanner sc){
             System.out.println("==========CREATE AEROPORT==============");
             session.beginTransaction();
            
-            Aeroport a1 = new Aeroport("BCN","Aeroport del prat", "Barcelona", 1500.33);
+            System.out.println("Codi internacional: ");
+            String codi = sc.nextLine();
+            System.out.println("Nom: ");
+            String nom = sc.nextLine();
+            System.out.println("Ciutat: ");
+            String ciutat = sc.nextLine();
+            System.out.println("Cost handling: ");
+            double cost = sc.nextDouble();
+            
+            /*Aeroport a1 = new Aeroport("BCN","Aeroport del prat", "Barcelona", 1500.33);
             Aeroport a2 = new Aeroport("LAX","Aeroport de LA", "Los Angeles", 1500.33);
+            */
+            Aeroport a1 = new Aeroport(codi, nom, ciutat, cost);
             
             session.save(a1);
-            session.save(a2);
+            //session.save(a2);
             session.getTransaction().commit();
             
             System.out.println("Successfully created "+ a1.toString());
-            System.out.println("Successfully created "+ a2.toString());
+            //System.out.println("Successfully created "+ a2.toString());
+            sc.nextLine();
             
         }
         
-        public static void createModelAvio(Session session){
+        public static void createModelAvio(Session session, Scanner sc){
             System.out.println("==========CREATE MODEL AVIO==============");
             session.beginTransaction();
- 
+            
+            System.out.println("Nom: ");
+            String nom = sc.nextLine();
+            System.out.println("Descripcio: ");
+            String desc = sc.nextLine();
+            System.out.println("Places: ");
+            int places = sc.nextInt();
+            System.out.println("Pes: ");
+            double pes = sc.nextDouble();
+            
+            /*
             ModelAvio m1 = new ModelAvio("Airbus A320","Model amb altes prestacions, blabla ...",300,200);
             ModelAvio m2 = new ModelAvio("Boeing 747","Model amb molta potencia, blabla ...",420,250);
- 
+            */  
+            ModelAvio m1 = new ModelAvio(nom, desc, places, pes);
+            
             session.save(m1);
-            session.save(m2);
+            //session.save(m2);
             session.getTransaction().commit();
             
             System.out.println("Successfully created "+ m1.toString());
-            System.out.println("Successfully created "+ m2.toString());
+            //System.out.println("Successfully created "+ m2.toString());
+            sc.nextLine();
         }
         
-        public static void createAvio(Session session){
+        public static void createAvio(Session session, Scanner sc){
             System.out.println("==========CREATE AVIO ==============");
-            Scanner sc = new Scanner(System.in);
             session.beginTransaction();
+            
+            System.out.println("Matricula: ");
+            String matricula = sc.nextLine();
             
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
             Query q = session.createQuery("from ModelAvio");
@@ -130,22 +158,30 @@ public class TestHB {
                 System.out.println(i+"."+model.getNom());
                 i++;
             }
+            System.out.println("Model Avio: ");
             int sel = sc.nextInt();
             
             ModelAvio m = listado.get(sel-1);
-                    
-            Avio a2 = new Avio(1,"XKW2511", m);
+                
+            Avio a2 = new Avio(matricula, m);
         
             session.save(a2);
             session.getTransaction().commit();
             
             System.out.println("Successfully created "+ a2.toString());
+            sc.nextLine();
         }
                 
-        public static void createPilot(Session session){
+        public static void createPilot(Session session, Scanner sc){
             System.out.println("==========CREATE PILOT ==============");
-            Scanner sc = new Scanner(System.in);
             session.beginTransaction();
+            
+            System.out.println("Nom: ");
+            String nom = sc.nextLine();
+            System.out.println("Cognom: ");
+            String cognom = sc.nextLine();
+            System.out.println("Hores Vol: ");
+            int hores = sc.nextInt();        
             
             List<Aeroport> listado = new ArrayList<Aeroport>();
             Query q = session.createQuery("from Aeroport");
@@ -156,15 +192,18 @@ public class TestHB {
                 System.out.println(i+"."+aero.getCodi_int());
                 i++;
             }
+            System.out.println("Aeroport Base: ");
             int sel = sc.nextInt();
             
             Aeroport aero = listado.get(sel-1);
             
-            Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
+            //Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
+            Pilot p = new Pilot(nom, cognom, hores, aero);
             session.save(p);
             session.getTransaction().commit();
             
             System.out.println("Successfully created "+ p.toString());
+            sc.nextLine();
         }
         
         /*public static void createRuta(){

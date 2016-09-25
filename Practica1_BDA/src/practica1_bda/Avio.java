@@ -36,6 +36,11 @@ public class Avio implements Serializable {
         this.modelAvio = modelAvio;
     }
 
+    public Avio(String matricula, ModelAvio modelAvio) {
+        this.matricula = matricula;
+        this.modelAvio = modelAvio;
+    }
+    
     public Integer getId() {
         return id;
     }
