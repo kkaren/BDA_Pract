@@ -64,12 +64,16 @@ public class Ruta implements Serializable {
         this.aeroport_origen = aeroport_origen;
         this.aeroport_desti = aeroport_desti;
         this.model_avio = model_avio;
-        this.data = null;       
-        this.avio = null;
-        this.pilot = null;
-        this.incidencies = null;
     }
-
+    
+    public Ruta(String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio) {
+        this.dia = dia;
+        this.hora = hora; 
+        this.aeroport_origen = aeroport_origen;
+        this.aeroport_desti = aeroport_desti;
+        this.model_avio = model_avio;
+    }
+    
     public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio, 
              Date data, Avio avio, Pilot pilot, String incidencies) {
         this.id = id;

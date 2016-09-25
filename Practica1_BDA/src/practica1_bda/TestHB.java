@@ -1,5 +1,6 @@
 package practica1_bda;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,6 +35,7 @@ public class TestHB {
             createModelAvio(session, sc);
             createAvio(session, sc);
             createPilot(session, sc);
+            createRuta(session, sc);
             session.close();
             /*	// TODO Auto-generated method stub
 		Session session = null;
@@ -206,8 +208,53 @@ public class TestHB {
             sc.nextLine();
         }
         
-        /*public static void createRuta(){
+        public static void createRuta(Session session, Scanner sc){
+            System.out.println("==========CREATE RUTA ==============");
+            session.beginTransaction();
             
+            System.out.println("Dia: ");
+            String dia = sc.nextLine();
+            System.out.println("Hora: ");
+            String hora = sc.nextLine();
+            String[] h = hora.split(":");
+            Time t = new Time(Integer.parseInt(h[0]), Integer.parseInt(h[1]), Integer.parseInt(h[2]));
+          
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            Query q = session.createQuery("from Aeroport");
+            listado = q.list();
+            int i = 1;
+            
+            for (Aeroport aero : listado) {
+                System.out.println(i+"."+aero.getCodi_int());
+                i++;
+            }
+            System.out.println("Aeroport Origen: ");
+            int sel = sc.nextInt();
+            Aeroport aero_origen = listado.get(sel-1);
+            
+            System.out.println("Aeroport Desti: ");
+            sel = sc.nextInt();
+            Aeroport aero_desti = listado.get(sel-1);
+            
+            List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
+            q = session.createQuery("from ModelAvio");
+            listado2 = q.list();
+            i = 1;
+            
+            for (ModelAvio model : listado2) {
+                System.out.println(i+"."+model.getNom());
+                i++;
+            }
+            System.out.println("Model Avio: ");
+            sel = sc.nextInt();
+            
+            ModelAvio model = listado2.get(sel-1);
+            
+            Ruta r = new Ruta(dia, t, aero_origen, aero_desti, model);
+            session.save(r);
+            session.getTransaction().commit();
+            
+            System.out.println("Successfully created "+ r.toString());
+            sc.nextLine();
         }
-        */
 }
