@@ -2,6 +2,7 @@ package practica1_bda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 import org.hibernate.Hibernate;
@@ -27,18 +28,13 @@ public class TestHB {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
-            
-            Aeroport a1 = new Aeroport("BCN123","Aeroport del prat", "Barcelona", 1500.33);
-            System.out.println("==========CREATE AEROPORT==============");
             Session session = getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(a1);
-            session.getTransaction().commit();
+            createAeroport(session);
+            createModelAvio(session);
+            createAvio(session);
+            createPilot(session);
             session.close();
-            System.out.println("Successfully created "+ a1.toString());
-            System.out.println("Aeroport ID" + a1.getId());
-            
-	/*	// TODO Auto-generated method stub
+            /*	// TODO Auto-generated method stub
 		Session session = null;
 	        Transaction tx = null;
 	        Articulo art = new Articulo("Lavadora AEG", 23.4);
@@ -88,4 +84,91 @@ public class TestHB {
             return sessionFactory;
             
         }
+        
+        public static void createAeroport(Session session){
+            System.out.println("==========CREATE AEROPORT==============");
+            session.beginTransaction();
+           
+            Aeroport a1 = new Aeroport("BCN","Aeroport del prat", "Barcelona", 1500.33);
+            Aeroport a2 = new Aeroport("LAX","Aeroport de LA", "Los Angeles", 1500.33);
+            
+            session.save(a1);
+            session.save(a2);
+            session.getTransaction().commit();
+            
+            System.out.println("Successfully created "+ a1.toString());
+            System.out.println("Successfully created "+ a2.toString());
+            
+        }
+        
+        public static void createModelAvio(Session session){
+            System.out.println("==========CREATE MODEL AVIO==============");
+            session.beginTransaction();
+ 
+            ModelAvio m1 = new ModelAvio("Airbus A320","Model amb altes prestacions, blabla ...",300,200);
+            ModelAvio m2 = new ModelAvio("Boeing 747","Model amb molta potencia, blabla ...",420,250);
+ 
+            session.save(m1);
+            session.save(m2);
+            session.getTransaction().commit();
+            
+            System.out.println("Successfully created "+ m1.toString());
+            System.out.println("Successfully created "+ m2.toString());
+        }
+        
+        public static void createAvio(Session session){
+            System.out.println("==========CREATE AVIO ==============");
+            Scanner sc = new Scanner(System.in);
+            session.beginTransaction();
+            
+            List<ModelAvio> listado = new ArrayList<ModelAvio>();
+            Query q = session.createQuery("from ModelAvio");
+            listado = q.list();
+            int i = 1;
+            
+            for (ModelAvio model : listado) {
+                System.out.println(i+"."+model.getNom());
+                i++;
+            }
+            int sel = sc.nextInt();
+            
+            ModelAvio m = listado.get(sel-1);
+                    
+            Avio a2 = new Avio(1,"XKW2511", m);
+        
+            session.save(a2);
+            session.getTransaction().commit();
+            
+            System.out.println("Successfully created "+ a2.toString());
+        }
+                
+        public static void createPilot(Session session){
+            System.out.println("==========CREATE PILOT ==============");
+            Scanner sc = new Scanner(System.in);
+            session.beginTransaction();
+            
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            Query q = session.createQuery("from Aeroport");
+            listado = q.list();
+            int i = 1;
+            
+            for (Aeroport aero : listado) {
+                System.out.println(i+"."+aero.getCodi_int());
+                i++;
+            }
+            int sel = sc.nextInt();
+            
+            Aeroport aero = listado.get(sel-1);
+            
+            Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
+            session.save(p);
+            session.getTransaction().commit();
+            
+            System.out.println("Successfully created "+ p.toString());
+        }
+        
+        /*public static void createRuta(){
+            
+        }
+        */
 }

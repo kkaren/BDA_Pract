@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="PILOT")
 public class Pilot implements Serializable {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -37,6 +37,13 @@ public class Pilot implements Serializable {
 
     public Pilot(Integer id, String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
         this.id = id;
+        this.nom = nom;
+        this.cognom = cognom;
+        this.hores_vol = hores_vol;
+        this.aeroport = id_aeroport;
+    }
+    
+    public Pilot(String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
         this.nom = nom;
         this.cognom = cognom;
         this.hores_vol = hores_vol;
@@ -83,5 +90,9 @@ public class Pilot implements Serializable {
         this.aeroport = aeroport;
     }
 
+    @Override
+    public String toString() {
+        return "Pilot{" + "id=" + id + ", nom=" + nom + ", cognom=" + cognom + ", hores_vol=" + hores_vol + ", aeroport=" + aeroport + '}';
+    }
 
 }

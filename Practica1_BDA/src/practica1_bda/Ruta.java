@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="RUTA")
 public class Ruta implements Serializable {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -36,18 +36,18 @@ public class Ruta implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="Model")
-    private ModelAvio id_model; // Relacio n-1
+    private ModelAvio model_avio; // Relacio n-1
     
     @Column(name="data")
     private Date data;
      
     @ManyToOne
     @JoinColumn(name="Avio")
-    private Avio id_avio; // Relacio n-1
+    private Avio avio; // Relacio n-1
      
     @ManyToOne
     @JoinColumn(name="Pilot")
-    private Pilot id_pilot; // Relacio n-1
+    private Pilot pilot; // Relacio n-1
      
     @Column(name="incidencies")
     private String incidencies;
@@ -57,23 +57,30 @@ public class Ruta implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public Ruta(Integer id, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio id_model) {
+    public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio) {
         this.id = id;
+        this.dia = dia;
+        this.hora = hora; 
         this.aeroport_origen = aeroport_origen;
         this.aeroport_desti = aeroport_desti;
-        this.id_model = id_model;
+        this.model_avio = model_avio;
+        this.data = null;       
+        this.avio = null;
+        this.pilot = null;
+        this.incidencies = null;
     }
 
-    public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio id_model, Date data, Avio id_avio, Pilot id_pilot, String incidencies) {
+    public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio, 
+             Date data, Avio avio, Pilot pilot, String incidencies) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
         this.aeroport_origen = aeroport_origen;
         this.aeroport_desti = aeroport_desti;
-        this.id_model = id_model;
+        this.model_avio = model_avio;
         this.data = data;
-        this.id_avio = id_avio;
-        this.id_pilot = id_pilot;
+        this.avio = avio;
+        this.pilot = pilot;
         this.incidencies = incidencies;
     }
 
@@ -118,11 +125,11 @@ public class Ruta implements Serializable {
     }
 
     public ModelAvio getId_model() {
-        return id_model;
+        return model_avio;
     }
 
-    public void setId_model(ModelAvio id_model) {
-        this.id_model = id_model;
+    public void setId_model(ModelAvio model_avio) {
+        this.model_avio = model_avio;
     }
 
     public Date getData() {
@@ -134,19 +141,19 @@ public class Ruta implements Serializable {
     }
 
     public Avio getId_avio() {
-        return id_avio;
+        return avio;
     }
 
-    public void setId_avio(Avio id_avio) {
-        this.id_avio = id_avio;
+    public void setId_avio(Avio avio) {
+        this.avio = avio;
     }
 
     public Pilot getId_pilot() {
-        return id_pilot;
+        return pilot;
     }
 
-    public void setId_pilot(Pilot id_pilot) {
-        this.id_pilot = id_pilot;
+    public void setId_pilot(Pilot pilot) {
+        this.pilot = pilot;
     }
 
     public String getIncidencies() {
@@ -156,6 +163,13 @@ public class Ruta implements Serializable {
     public void setIncidencies(String incidencies) {
         this.incidencies = incidencies;
     }
-
     
+    @Override
+    public String toString() {
+        return "Ruta{" + "id=" + id + ",dia=" + dia + ", hora=" + hora + ", aeroport_origen=" 
+                + aeroport_origen + ", aeroport_desti=" + aeroport_desti + ", model_avio=" 
+                + model_avio + ", data=" + data + ", avio=" + avio + ", pilot=" + pilot 
+                + ", incidencies=" + incidencies +'}';
+    }
+
 }

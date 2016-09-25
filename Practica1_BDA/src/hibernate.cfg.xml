@@ -12,7 +12,7 @@
     <!-- none, update, create -->
     <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
     <property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.hbm2ddl.auto">create</property>
+    
     <property name="hibernate.hbm2ddl.auto">create-drop</property>
     <!-- Declaramos los archivos de mapping-->
     <property name="hibernate.connection.username">postgres</property>

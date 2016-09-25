@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="MODEL_AVIO")
 public class ModelAvio implements Serializable {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -94,4 +94,8 @@ public class ModelAvio implements Serializable {
         this.pes = pes;
     }
 
+    @Override
+     public String toString() {
+        return "ModelAvio{" + "id=" + id + ", nom=" + nom + ", descripcio=" + descripcio + ", places=" + places + ", pes=" + pes + '}';
+    }
 }

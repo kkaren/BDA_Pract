@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="AVIO")
 public class Avio implements Serializable {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -22,7 +22,7 @@ public class Avio implements Serializable {
     private String matricula;
     
     @ManyToOne
-    @JoinColumn(name="id model")
+    @JoinColumn(name="id_model")
     private ModelAvio modelAvio; // Relacio many-to-1
     
     public Avio() {
@@ -60,5 +60,9 @@ public class Avio implements Serializable {
         this.modelAvio = modelAvio;
     }
 
- 
+    @Override
+    public String toString() {
+        return "Avio{" + "id=" + id + ", matricula=" + matricula + ", modelAvio=" + modelAvio + '}';
+    }
+
 }
