@@ -5,6 +5,7 @@
  */
 package practica1_bda;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -30,28 +31,34 @@ public class ModelAvio implements Serializable {
     @Column(name="pes")
     private double pes;
     
+    @ManyToMany
+    @JoinColumn(name="pilots")
+    private Set<Pilot> pilots;
+    
     public ModelAvio() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     public ModelAvio(Integer id, String nom, String descripcio, Integer places, 
-            double pes) {
+            double pes) { //, Set<Pilot> pilots) {
         super();
         this.id = id;
         this.nom = nom;
         this.descripcio = descripcio;
         this.places = places;
         this.pes = pes;
+        //this.pilots = pilots;
     }
     
     public ModelAvio(String nom, String descripcio, Integer places, 
-            double pes) {
+            double pes) { //, Set<Pilot> pilots) {
         super();
         this.nom = nom;
         this.descripcio = descripcio;
         this.places = places;
         this.pes = pes;
+        //this.pilots = pilots;
     }
 
     public Integer getId() {
@@ -94,8 +101,18 @@ public class ModelAvio implements Serializable {
         this.pes = pes;
     }
 
+    public Set<Pilot> getPilots() {
+        return pilots;
+    }
+
+    public void setPilots(Set<Pilot> pilots) {
+        this.pilots = pilots;
+    }
+
+    
     @Override
-     public String toString() {
+    public String toString() {
         return "ModelAvio{" + "id=" + id + ", nom=" + nom + ", descripcio=" + descripcio + ", places=" + places + ", pes=" + pes + '}';
+        // PILOTS ??
     }
 }

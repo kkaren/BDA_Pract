@@ -31,52 +31,56 @@ public class TestHB {
 	public static void main(String[] args) {
             Session session = getSessionFactory().openSession();
             Scanner sc = new Scanner(System.in);
+            /*int sel = 0;
+            do{
+                System.out.println("VolaUB");
+                System.out.println("------------------------------");
+                System.out.println("1. Aeroport");
+                System.out.println("2. Model Avio");
+                System.out.println("3. Avio");
+                System.out.println("4. Pilot");
+                System.out.println("5. Ruta");
+                System.out.println("6. Sortir");
+                sel = sc.nextInt();
+                
+            } while(sel != 6);
+            */
+            
+            
             createAeroport(session, sc);
+            createAeroport(session, sc);
+            readAeroport(session);
+            
+            
+            createModelAvio(session, sc);
             createModelAvio(session, sc);
             createAvio(session, sc);
             createPilot(session, sc);
-            createRuta(session, sc);
+            /*createRuta(session, sc);
+            */
+            
+            readModelAvio(session);
+            readAvio(session);
+            readPilot(session);
+            //readRuta(session);
+            
+            /*
+            deleteAeroport();
+            deleteModelAvio();
+            deleteAvio();
+            deletePilot();
+            deleteRuta();
+            
+            updateAeroport();
+            updateModelAvio();
+            updateAvio();
+            updatePilot();
+            updateRuta();
+            
+            */
+            
             session.close();
-            /*	// TODO Auto-generated method stub
-		Session session = null;
-	        Transaction tx = null;
-	        Articulo art = new Articulo("Lavadora AEG", 23.4);
-	        
-	        try {
-	            session = ConnectorHB.getSession();
-	            tx = session.beginTransaction();
-	            session.save(art);
-	            //El objecto art esta enlazado
-	            
-	            art.setDescripcion("Seat Leon"); //Esto se modificara en la BD no los datos iniciales.
-	            tx.commit();
-	            
-	            List<Catalogo> listado = new ArrayList<Catalogo>();
-	            Query q = session.createQuery("from Catalogo");
-	            listado = q.list();
-	            
-	            for (Catalogo catalogo : listado) {
-	            	System.out.println(catalogo.getDescripcion());
-	            	for(Articulo articulo: catalogo.getArticulos())
-	                System.out.println(articulo.getDescripcion());
-	            }
-	            System.out.println("Proceso finalizado...");
-	            //US DE QUERY SQL PER TROBAR OBJECTES
-	           List <Articulo> articulos = session.createSQLQuery("SELECT * FROM ARTICULO").addEntity(Articulo.class).list();
-	            for(Articulo articulo: articulos)
-	                System.out.println(articulo.getDescripcion());
-	            
-	  
-	            Query q1= session.createSQLQuery("SELECT descripcion from ARTICULO WHERE ID=1").addScalar("descripcion",StringType.INSTANCE);
-	          System.out.println("HE OBTINGUT LA DESCRIPCIO: "+q1.list().get(0));
-	            
-	        } catch (HibernateException e) {
-	            if(tx!=null && tx.isActive()) tx.rollback();
-	            e.printStackTrace();
-	        } finally {
-	            if(session!=null) session.close();
-	        }
-*/
+            
 	}
         
         public static SessionFactory getSessionFactory() {
@@ -151,6 +155,7 @@ public class TestHB {
             System.out.println("Matricula: ");
             String matricula = sc.nextLine();
             
+            System.out.println("---------- Models Avio ----------");
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
             Query q = session.createQuery("from ModelAvio");
             listado = q.list();
@@ -185,6 +190,7 @@ public class TestHB {
             System.out.println("Hores Vol: ");
             int hores = sc.nextInt();        
             
+            System.out.println("---------- Aeroports ----------");
             List<Aeroport> listado = new ArrayList<Aeroport>();
             Query q = session.createQuery("from Aeroport");
             listado = q.list();
@@ -199,8 +205,26 @@ public class TestHB {
             
             Aeroport aero = listado.get(sel-1);
             
+            System.out.println("-------- Models Avio --------");
+            List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
+            q = session.createQuery("from ModelAvio");
+            listado2 = q.list();
+            i = 1;
+  
+            for (ModelAvio model : listado2) {
+                System.out.println(i+"."+model.getNom());
+                i++;
+            }
+            System.out.println("Model Avio: ");
+            sel = sc.nextInt();
+            
+            ModelAvio model = listado2.get(sel-1);
+            
             //Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
             Pilot p = new Pilot(nom, cognom, hores, aero);
+            p.addModel(model);
+            // BUCLE PER AFEGIR MES D'UN MODEL !
+            
             session.save(p);
             session.getTransaction().commit();
             
@@ -219,11 +243,12 @@ public class TestHB {
             String[] h = hora.split(":");
             Time t = new Time(Integer.parseInt(h[0]), Integer.parseInt(h[1]), Integer.parseInt(h[2]));
           
+            System.out.println("---------- Aeroports ----------");          
             List<Aeroport> listado = new ArrayList<Aeroport>();
             Query q = session.createQuery("from Aeroport");
             listado = q.list();
             int i = 1;
-            
+
             for (Aeroport aero : listado) {
                 System.out.println(i+"."+aero.getCodi_int());
                 i++;
@@ -236,6 +261,7 @@ public class TestHB {
             sel = sc.nextInt();
             Aeroport aero_desti = listado.get(sel-1);
             
+            System.out.println("---------- Models Avio ----------");
             List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
             q = session.createQuery("from ModelAvio");
             listado2 = q.list();
@@ -257,4 +283,67 @@ public class TestHB {
             System.out.println("Successfully created "+ r.toString());
             sc.nextLine();
         }
+        
+        public static void readAeroport(Session session){
+            System.out.println("---------- Aeroports ----------");          
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            Query q = session.createQuery("from Aeroport");
+            listado = q.list();
+
+            System.out.println("Id | Codi_int |  Nom                    | Ciutat     | Cost_handling ");
+            System.out.println("--------------------------------------------------------------------");
+            for (Aeroport aero : listado) {
+                System.out.println(aero.getId() + " | " + aero.getCodi_int() + "       | " 
+                        + aero.getNom() + " | " + aero.getCiutat() + " | " + aero.getCost_handling());
+            }
+        }
+        
+        public static void readModelAvio(Session session){
+            System.out.println("---------- Models Avio ----------");          
+            List<ModelAvio> listado = new ArrayList<ModelAvio>();
+            Query q = session.createQuery("from ModelAvio");
+            listado = q.list();
+
+            System.out.println("Id | Nom |  Descripcio | Places | Pes ");
+            System.out.println("--------------------------------------");
+            for (ModelAvio model : listado) {
+                System.out.println(model.getId() + " | " + model.getNom() + " | " 
+                        + model.getDescripcio() + " | " + model.getPlaces() + " | " 
+                        + model.getPes());
+            }
+        }
+        
+        public static void readAvio(Session session){
+            System.out.println("------------ Avions ------------");          
+            List<Avio> listado = new ArrayList<Avio>();
+            Query q = session.createQuery("from Avio");
+            listado = q.list();
+
+            System.out.println("Id | Matricula |  Model ");
+            System.out.println("-------------------------");
+            for (Avio avio : listado) {
+                System.out.println(avio.getId() + " | " + avio.getMatricula() + " | " 
+                        + avio.getModelAvio().getNom());
+            }
+        }
+        
+        public static void readPilot(Session session){
+            System.out.println("------------ Pilots ------------");          
+            List<Pilot> listado = new ArrayList<Pilot>();
+            Query q = session.createQuery("from Pilot");
+            listado = q.list();
+
+            System.out.println("Id | Nom | Cognom | Hores_vol | Model_avio ");
+            System.out.println("-------------------------------------------");
+            for (Pilot pilot : listado) {
+                System.out.println(pilot.getId() + " | " + pilot.getNom() + " | " 
+                        + pilot.getCognom() + " | " + pilot.getHores_vol() + " | " 
+                        + pilot.getModelsNames());
+            }
+        }
+        
+        /*
+        public static void readRuta(){
+            
+        }*/
 }

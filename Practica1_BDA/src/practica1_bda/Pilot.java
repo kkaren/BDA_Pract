@@ -5,6 +5,7 @@
  */
 package practica1_bda;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -28,8 +29,13 @@ public class Pilot implements Serializable {
     private Integer hores_vol;
     
     @ManyToOne
+    @JoinColumn(name="aeroport")
     private Aeroport aeroport; // Relacio many-to-one
 
+    @ManyToMany
+    @JoinColumn(name="models")
+    private Set<ModelAvio> models; // Relacio n-n
+    
     public Pilot() {
         super();
         // TODO Auto-generated constructor stub
@@ -41,6 +47,7 @@ public class Pilot implements Serializable {
         this.cognom = cognom;
         this.hores_vol = hores_vol;
         this.aeroport = id_aeroport;
+        this.models = null;
     }
     
     public Pilot(String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
@@ -48,6 +55,7 @@ public class Pilot implements Serializable {
         this.cognom = cognom;
         this.hores_vol = hores_vol;
         this.aeroport = id_aeroport;
+        this.models = null;
     }
 
     public Integer getId() {
@@ -90,9 +98,31 @@ public class Pilot implements Serializable {
         this.aeroport = aeroport;
     }
 
+    public Set<ModelAvio> getModels() {
+        return models;
+    }
+
+    public void setModels(Set<ModelAvio> models) {
+        this.models = models;
+    }
+    
+    public void addModel(ModelAvio a){
+        System.out.println("WTF");
+        this.models.add(a);
+    }
+    
+    public Set<String> getModelsNames() {
+        Set<String> noms = null;
+        for (ModelAvio model: this.models){
+            noms.add(model.getNom());
+        }
+        return noms;
+    }
+
     @Override
     public String toString() {
         return "Pilot{" + "id=" + id + ", nom=" + nom + ", cognom=" + cognom + ", hores_vol=" + hores_vol + ", aeroport=" + aeroport + '}';
+        // MODELS AVIO ??
     }
 
 }
