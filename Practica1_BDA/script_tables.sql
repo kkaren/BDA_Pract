@@ -7,7 +7,7 @@ cost_handling decimal(10,2) NOT NULL,
 CONSTRAINT aeroport_pk PRIMARY KEY(id_aeroport)
 );
 
-CREATE TABLE modelAvio(
+CREATE TABLE model_avio(
 id_model integer NOT NULL,
 nom varchar(30) NOT NULL,
 descripcio varchar(200) NOT NULL,
