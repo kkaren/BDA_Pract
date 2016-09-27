@@ -446,11 +446,45 @@ public class TestHB {
         }
 
         private static void deletePilot(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("----------- Pilots -----------");
+            Scanner sc = new Scanner(System.in);
+            List<Pilot> listado = new ArrayList<Pilot>();
+            Query q = session.createQuery("from Pilot");
+            listado = q.list();
+            int i = 1;
+            
+            for (Pilot pilot : listado) {
+                System.out.println(i+"."+pilot.getNom()+pilot.getCognom());
+                i++;
+            }
+            System.out.println("Pilot: ");
+            int sel = sc.nextInt();
+            
+            session.beginTransaction();
+            Pilot pilot = listado.get(sel-1);
+            session.delete(pilot);
+            session.getTransaction().commit();    
         }
 
         private static void deleteRuta(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("----------- Rutes -----------");
+            Scanner sc = new Scanner(System.in);
+            List<Ruta> listado = new ArrayList<Ruta>();
+            Query q = session.createQuery("from Ruta");
+            listado = q.list();
+            int i = 1;
+            
+            for (Ruta ruta : listado) {
+                System.out.println(i+"."+ruta);
+                i++;
+            }
+            System.out.println("Ruta: ");
+            int sel = sc.nextInt();
+            
+            session.beginTransaction();
+            Ruta ruta = listado.get(sel-1);
+            session.delete(ruta);
+            session.getTransaction().commit();
         }
         
         private static void editAeroport(Session session) {
