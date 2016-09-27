@@ -5,6 +5,8 @@
  */
 package practica1_bda;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -47,7 +49,7 @@ public class Pilot implements Serializable {
         this.cognom = cognom;
         this.hores_vol = hores_vol;
         this.aeroport = id_aeroport;
-        this.models = null;
+        this.models = new HashSet<ModelAvio>();
     }
     
     public Pilot(String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
@@ -55,7 +57,7 @@ public class Pilot implements Serializable {
         this.cognom = cognom;
         this.hores_vol = hores_vol;
         this.aeroport = id_aeroport;
-        this.models = null;
+        this.models = new HashSet<ModelAvio>();
     }
 
     public Integer getId() {
@@ -112,7 +114,7 @@ public class Pilot implements Serializable {
     }
     
     public Set<String> getModelsNames() {
-        Set<String> noms = null;
+        Set<String> noms = new HashSet<String>();
         for (ModelAvio model: this.models){
             noms.add(model.getNom());
         }

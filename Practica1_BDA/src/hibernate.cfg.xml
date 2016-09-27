@@ -10,10 +10,12 @@
     <property name="format_sql">true</property>
     <!-- Definimos que Hibernate cree las tablas none : no actualiza, update : act las dif, create :> machaca todo en la bd-->
     <!-- none, update, create -->
-    <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
     <property name="hibernate.hbm2ddl.auto">update</property>
     
-    <property name="hibernate.hbm2ddl.auto">create-drop</property>
+    <!-- En un moment, em donava problemes amb la generacio de claus primaries, fer una prova amb el modo create o create drop
+        i despres seguir nomes amb el mode update
+    -->
+    <!--  <property name="hibernate.hbm2ddl.auto">create-drop</property>-->
     <!-- Declaramos los archivos de mapping-->
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">db1</property>

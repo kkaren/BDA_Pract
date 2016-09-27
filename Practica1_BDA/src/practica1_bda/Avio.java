@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="AVIO")
 public class Avio implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
 

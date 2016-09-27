@@ -1,5 +1,7 @@
 package practica1_bda;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,55 +32,53 @@ public class TestHB {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
             Session session = getSessionFactory().openSession();
-            Scanner sc = new Scanner(System.in);
-            /*int sel = 0;
-            do{
-                System.out.println("VolaUB");
-                System.out.println("------------------------------");
-                System.out.println("1. Aeroport");
-                System.out.println("2. Model Avio");
-                System.out.println("3. Avio");
-                System.out.println("4. Pilot");
-                System.out.println("5. Ruta");
-                System.out.println("6. Sortir");
-                sel = sc.nextInt();
+            // Local variable
+            int swValue;
+            boolean acabar = FALSE;
+
+            do {
                 
-            } while(sel != 6);
-            */
             
-            
-            createAeroport(session, sc);
-            createAeroport(session, sc);
-            readAeroport(session);
-            
-            
-            createModelAvio(session, sc);
-            createModelAvio(session, sc);
-            createAvio(session, sc);
-            createPilot(session, sc);
-            /*createRuta(session, sc);
-            */
-            
-            readModelAvio(session);
-            readAvio(session);
-            readPilot(session);
-            //readRuta(session);
-            
-            /*
-            deleteAeroport();
-            deleteModelAvio();
-            deleteAvio();
-            deletePilot();
-            deleteRuta();
-            
-            updateAeroport();
-            updateModelAvio();
-            updateAvio();
-            updatePilot();
-            updateRuta();
-            
-            */
-            
+                // Display menu graphics
+                System.out.println("============================");
+                System.out.println("|   MENU SELECTION DEMO    |");
+                System.out.println("============================");
+                System.out.println("| Options:                 |");
+                System.out.println("|        1. Consultar      |");
+                System.out.println("|        2. Afegir         |");
+                System.out.println("|        3. Borrar         |");
+                System.out.println("|        4. Modificar      |");
+                System.out.println("|        5. Sortir         |");
+                System.out.println("============================");
+                swValue = Keyin.inInt(" Select option: ");
+
+                // Switch construct
+                switch (swValue) {
+                case 1:
+                  System.out.println("Option 1 selected");
+                  menu_consultar(session);
+                  break;
+                case 2:
+                  System.out.println("Option 2 selected");
+                  menu_afegir(session);
+                  break;
+                case 3:
+                  System.out.println("Option 3 selected");
+                  menu_borrar(session);
+                  break;
+                case 4:
+                  System.out.println("Option 4 selected");
+                  menu_modificar(session);
+                  break;
+                case 5:
+                  System.out.println("Exit selected");
+                  acabar=TRUE;
+                  break;
+                default:
+                  System.out.println("Invalid selection");
+                  break; // This break is not really necessary
+                }
+            }while(!acabar);
             session.close();
             
 	}
@@ -95,7 +95,7 @@ public class TestHB {
         public static void createAeroport(Session session, Scanner sc){
             System.out.println("==========CREATE AEROPORT==============");
             session.beginTransaction();
-           
+            
             System.out.println("Codi internacional: ");
             String codi = sc.nextLine();
             System.out.println("Nom: ");
@@ -238,7 +238,7 @@ public class TestHB {
             
             System.out.println("Dia: ");
             String dia = sc.nextLine();
-            System.out.println("Hora: ");
+            System.out.println("Hora: (hh:mm:ss) ");
             String hora = sc.nextLine();
             String[] h = hora.split(":");
             Time t = new Time(Integer.parseInt(h[0]), Integer.parseInt(h[1]), Integer.parseInt(h[2]));
@@ -341,9 +341,419 @@ public class TestHB {
                         + pilot.getModelsNames());
             }
         }
+             
+        public static void readRuta(Session session){
+            System.out.println("------------ Rutes ------------");          
+            List<Ruta> listado = new ArrayList<Ruta>();
+            Query q = session.createQuery("from Ruta");
+            listado = q.list();
+
+            System.out.println("Id | Dia | Hora | Origen | Desti | Incidencies | Pilot");
+            System.out.println("-------------------------------------------");
+            for (Ruta ruta : listado) {
+                System.out.println(ruta.getId() + " | " + ruta.getDia()+ " | " 
+                        + ruta.getHora() + " | " + ruta.getAeroport_origen().getCodi_int()+ " | " 
+                        + ruta.getAeroport_desti().getCodi_int());
+            }
+        }
         
-        /*
-        public static void readRuta(){
+        
+        private static void deleteAeroport(Session session) {
+            System.out.println("---------- Aeroports ----------");
+            Scanner sc = new Scanner(System.in);
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            Query q = session.createQuery("from Aeroport");
+            listado = q.list();
+            int i = 1;
             
-        }*/
+            for (Aeroport aero : listado) {
+                System.out.println(i+"."+aero.getCodi_int());
+                i++;
+            }
+            System.out.println("Aeroport Base: ");
+            int sel = sc.nextInt();
+            
+            Aeroport aero = listado.get(sel-1);
+            session.beginTransaction();
+            session.delete(aero);
+            session.getTransaction().commit();
+            
+            System.out.println("---------- Aeroports ----------");
+            listado = new ArrayList<Aeroport>();
+            q = session.createQuery("from Aeroport");
+            listado = q.list();
+            i = 1;
+            
+            for (Aeroport aero1 : listado) {
+                System.out.println(i+"."+aero1.getCodi_int());
+                i++;
+            }
+        }
+
+        private static void deleteModelAvio(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void deleteAvio(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void deletePilot(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void deleteRuta(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+        private static void editAeroport(Session session) {
+            System.out.println("---------- Aeroports ----------");
+            Scanner sc = new Scanner(System.in);
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            Query q = session.createQuery("from Aeroport");
+            listado = q.list();
+            int i = 1;
+            
+            for (Aeroport aero : listado) {
+                System.out.println(i+"."+aero.getCodi_int());
+                i++;
+            }
+            System.out.println("Aeroport Base: ");
+            int sel = sc.nextInt();
+            session.beginTransaction();
+            Aeroport aero = (Aeroport) session.load(Aeroport.class,listado.get(sel-1).getId());
+            sc.nextLine();
+            System.out.println("Codi internacional: ");
+            String codi = sc.nextLine();
+            System.out.println("Nom: ");
+            String nom = sc.nextLine();
+            System.out.println("Ciutat: ");
+            String ciutat = sc.nextLine();
+            System.out.println("Cost handling: ");
+            double cost = sc.nextDouble();
+            aero.setCodi_int(codi);
+            aero.setCiutat(ciutat);            
+            aero.setNom(nom);
+            aero.setCost_handling(cost);
+            session.getTransaction().commit();
+            System.out.println("TAULA DESPRES DE UPDATES: ");
+            listado = new ArrayList<Aeroport>();
+            q = session.createQuery("from Aeroport");
+            listado = q.list();
+            i = 1;           
+            for (Aeroport aero1 : listado) {
+                System.out.println(i+"."+aero1.getCodi_int());
+                i++;
+            }
+            
+
+        }
+
+        private static void editModelAvio(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void editAvio(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void editPilot(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        private static void editRuta(Session session) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+
+        private static void menu_consultar(Session session) {
+        // Local variable
+            int swValue;
+
+            // Display menu graphics
+            System.out.println("============================");
+            System.out.println("|   MENU CONSULTAR         |");
+            System.out.println("============================");
+            System.out.println("| Options:                 |");
+            System.out.println("|        1. Aeroports      |");
+            System.out.println("|        2. Models d'avio  |");
+            System.out.println("|        3. Avions         |");
+            System.out.println("|        4. Pilots         |");
+            System.out.println("|        5. Rutes          |");
+            System.out.println("============================");
+            swValue = Keyin.inInt(" Select option: ");
+
+            // Switch construct
+            switch (swValue) {
+            case 1:
+                System.out.println("Option 1 selected");
+                readAeroport(session);
+              break;
+            case 2:
+                System.out.println("Option 2 selected");
+                readModelAvio(session);
+              break;
+            case 3:
+                System.out.println("Option 3 selected");
+                readAvio(session);
+              break;
+            case 4:
+                System.out.println("Option 4 selected");
+                readPilot(session);
+              break;
+            case 5:
+                System.out.println("Option 5 selected");
+                readRuta(session);
+              break;
+            default:
+              System.out.println("Invalid selection");
+              break; // This break is not really necessary
+            }
+        }
+
+        private static void menu_afegir(Session session) {
+        
+        // Local variable
+            int swValue;
+            Scanner sc = new Scanner(System.in);
+
+            // Display menu graphics
+            System.out.println("============================");
+            System.out.println("|   MENU AFEGIR            |");
+            System.out.println("============================");
+            System.out.println("| Options:                 |");
+            System.out.println("|        1. Aeroports      |");
+            System.out.println("|        2. Models d'avio  |");
+            System.out.println("|        3. Avions         |");
+            System.out.println("|        4. Pilots         |");
+            System.out.println("|        5. Rutes          |");
+            System.out.println("============================");
+            swValue = Keyin.inInt(" Select option: ");
+
+            // Switch construct
+            switch (swValue) {
+            case 1:
+                System.out.println("Option 1 selected");
+                createAeroport(session, sc);
+              break;
+            case 2:
+                System.out.println("Option 2 selected");
+                createModelAvio(session, sc);
+              break;
+            case 3:
+                System.out.println("Option 3 selected");
+                createAvio(session, sc);
+              break;
+            case 4:
+                System.out.println("Option 4 selected");
+                createPilot(session, sc);
+              break;
+            case 5:
+                System.out.println("Option 5 selected");
+                createRuta(session, sc);
+              break;
+            default:
+              System.out.println("Invalid selection");
+              break; // This break is not really necessary
+            }
+    
+        }
+
+        private static void menu_borrar(Session session) {
+        // Local variable
+            int swValue;
+            Scanner sc = null;
+
+            // Display menu graphics
+            System.out.println("============================");
+            System.out.println("|   MENU BORRAR            |");
+            System.out.println("============================");
+            System.out.println("| Options:                 |");
+            System.out.println("|        1. Aeroports      |");
+            System.out.println("|        2. Models d'avio  |");
+            System.out.println("|        3. Avions         |");
+            System.out.println("|        4. Pilots         |");
+            System.out.println("|        5. Rutes          |");
+            System.out.println("============================");
+            swValue = Keyin.inInt(" Select option: ");
+
+            // Switch construct
+            switch (swValue) {
+            case 1:
+                System.out.println("Option 1 selected");
+                deleteAeroport(session);
+              break;
+            case 2:
+                System.out.println("Option 2 selected");
+                deleteModelAvio(session);
+              break;
+            case 3:
+                System.out.println("Option 3 selected");
+                deleteAvio(session);
+              break;
+            case 4:
+                System.out.println("Option 4 selected");
+                deletePilot(session);
+              break;
+            case 5:
+                System.out.println("Option 5 selected");
+                deleteRuta(session);
+              break;
+            default:
+              System.out.println("Invalid selection");
+              break; // This break is not really necessary
+            }
+    
+        }
+
+        private static void menu_modificar(Session session) {
+            int swValue;
+            Scanner sc = null;
+
+            // Display menu graphics
+            System.out.println("============================");
+            System.out.println("|   MENU EDITAR             |");
+            System.out.println("============================");
+            System.out.println("| Options:                 |");
+            System.out.println("|        1. Aeroports      |");
+            System.out.println("|        2. Models d'avio  |");
+            System.out.println("|        3. Avions         |");
+            System.out.println("|        4. Pilots         |");
+            System.out.println("|        5. Rutes          |");
+            System.out.println("============================");
+            swValue = Keyin.inInt(" Select option: ");
+
+            // Switch construct
+            switch (swValue) {
+            case 1:
+                System.out.println("Option 1 selected");
+                editAeroport(session);
+              break;
+            case 2:
+                System.out.println("Option 2 selected");
+                editModelAvio(session);
+              break;
+            case 3:
+                System.out.println("Option 3 selected");
+                editAvio(session);
+              break;
+            case 4:
+                System.out.println("Option 4 selected");
+                editPilot(session);
+              break;
+            case 5:
+                System.out.println("Option 5 selected");
+                editRuta(session);
+              break;
+            default:
+              System.out.println("Invalid selection");
+              break; // This break is not really necessary
+            }
+        }
+
+}
+
+
+class Keyin {
+
+  //*******************************
+  //   support methods
+  //*******************************
+  //Method to display the user's prompt string
+  public static void printPrompt(String prompt) {
+    System.out.print(prompt + " ");
+    System.out.flush();
+  }
+
+  //Method to make sure no data is available in the
+  //input stream
+  public static void inputFlush() {
+    int dummy;
+    int bAvail;
+
+    try {
+      while ((System.in.available()) != 0)
+        dummy = System.in.read();
+    } catch (java.io.IOException e) {
+      System.out.println("Input error");
+    }
+  }
+
+  //********************************
+  //  data input methods for
+  //string, int, char, and double
+  //********************************
+  public static String inString(String prompt) {
+    inputFlush();
+    printPrompt(prompt);
+    return inString();
+  }
+
+  public static String inString() {
+    int aChar;
+    String s = "";
+    boolean finished = false;
+
+    while (!finished) {
+      try {
+        aChar = System.in.read();
+        if (aChar < 0 || (char) aChar == '\n')
+          finished = true;
+        else if ((char) aChar != '\r')
+          s = s + (char) aChar; // Enter into string
+      }
+
+      catch (java.io.IOException e) {
+        System.out.println("Input error");
+        finished = true;
+      }
+    }
+    return s;
+  }
+
+  public static int inInt(String prompt) {
+    while (true) {
+      inputFlush();
+      printPrompt(prompt);
+      try {
+        return Integer.valueOf(inString().trim()).intValue();
+      }
+
+      catch (NumberFormatException e) {
+        System.out.println("Invalid input. Not an integer");
+      }
+    }
+  }
+
+  public static char inChar(String prompt) {
+    int aChar = 0;
+
+    inputFlush();
+    printPrompt(prompt);
+
+    try {
+      aChar = System.in.read();
+    }
+
+    catch (java.io.IOException e) {
+      System.out.println("Input error");
+    }
+    inputFlush();
+    return (char) aChar;
+  }
+
+  public static double inDouble(String prompt) {
+    while (true) {
+      inputFlush();
+      printPrompt(prompt);
+      try {
+        return Double.valueOf(inString().trim()).doubleValue();
+      }
+
+      catch (NumberFormatException e) {
+        System.out
+            .println("Invalid input. Not a floating point number");
+      }
+    }
+  }
 }
