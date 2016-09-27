@@ -172,10 +172,20 @@ public class Ruta implements Serializable {
 
     @Override
     public String toString() {
-        return "Ruta{" + "id=" + id + ",dia=" + dia + ", hora=" + hora + ", aeroport_origen=" 
+        /*return "Ruta{" + "id=" + id + ",dia=" + dia + ", hora=" + hora + ", aeroport_origen=" 
                 + aeroport_origen + ", aeroport_desti=" + aeroport_desti + ", model_avio=" 
                 + model_avio + ", data=" + data + ", avio=" + avio + ", pilot=" + pilot 
-                + ", incidencies=" + incidencies +'}';
+                + ", incidencies=" + incidencies +'}';*/
+        String r;
+        if(avio==null){
+            r = dia + ", "+ hora +", "+aeroport_origen.getCodi_int()+", "+aeroport_desti.getCodi_int()
+                +", "+model_avio.getNom();
+        } else {
+            r = dia + ", "+ hora +", "+aeroport_origen.getCodi_int()+", "+aeroport_desti.getCodi_int()
+                +", "+model_avio.getNom() +", "+data+", "+avio.getMatricula()+", "+pilot.getNom()+" " +pilot.getCognom()
+                +", "+incidencies;
+        }
+        return r;
     }
 
 }

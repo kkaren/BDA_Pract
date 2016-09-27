@@ -110,7 +110,8 @@ public class Aeroport implements Serializable{
 
     @Override
     public String toString() {
-        return "Aeroport{" + "id=" + id + ", codi_int=" + codi_int + ", nom=" + nom + ", ciutat=" + ciutat + ", cost_handling=" + cost_handling + '}';
+        //return "Aeroport{" + "id=" + id + ", codi_int=" + codi_int + ", nom=" + nom + ", ciutat=" + ciutat + ", cost_handling=" + cost_handling + '}';
+        return codi_int + ", "+ nom +", "+ciutat+", "+cost_handling;
     }
 
 }

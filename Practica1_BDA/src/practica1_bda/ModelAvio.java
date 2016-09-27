@@ -121,7 +121,8 @@ public class ModelAvio implements Serializable {
     
     @Override
     public String toString() {
-        return "ModelAvio{" + "id=" + id + ", nom=" + nom + ", descripcio=" + descripcio + ", places=" + places + ", pes=" + pes + '}';
+        //return "ModelAvio{" + "id=" + id + ", nom=" + nom + ", descripcio=" + descripcio + ", places=" + places + ", pes=" + pes + '}';
         // PILOTS ??
+        return nom + ", "+ descripcio +", "+places+", "+pes;
     }
 }

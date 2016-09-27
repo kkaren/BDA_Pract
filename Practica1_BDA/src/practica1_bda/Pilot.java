@@ -5,12 +5,9 @@
  */
 package practica1_bda;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -122,17 +119,22 @@ public class Pilot implements Serializable {
     }    
     
     public Set<String> getModelsNames() {
+        Set<String> n = new HashSet<String>();
+        for (ModelAvio model: this.models){
+            n.add(model.getNom());
+        }
+        return n;
+    }
+    
+    @Override
+    public String toString() {
+        //return "Pilot{" + "id=" + id + ", nom=" + nom + ", cognom=" + cognom + ", hores_vol=" + hores_vol + ", aeroport=" + aeroport + '}';
+        // MODELS AVIO ??
         Set<String> noms = new HashSet<String>();
         for (ModelAvio model: this.models){
             noms.add(model.getNom());
         }
-        return noms;
-    }
-
-    @Override
-    public String toString() {
-        return "Pilot{" + "id=" + id + ", nom=" + nom + ", cognom=" + cognom + ", hores_vol=" + hores_vol + ", aeroport=" + aeroport + '}';
-        // MODELS AVIO ??
+        return nom + cognom + ", "+ hores_vol +", "+aeroport.getCodi_int()+", "+noms;
     }
 
 }

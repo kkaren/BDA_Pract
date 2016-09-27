@@ -73,7 +73,8 @@ public class Avio implements Serializable {
 
     @Override
     public String toString() {
-        return "Avio{" + "id=" + id + ", matricula=" + matricula + ", modelAvio=" + modelAvio + '}';
+        //return "Avio{" + "id=" + id + ", matricula=" + matricula + ", modelAvio=" + modelAvio + '}';
+        return matricula + ", "+ modelAvio.getNom();
     }
 
 }
