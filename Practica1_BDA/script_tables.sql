@@ -19,7 +19,7 @@ CONSTRAINT model_pk PRIMARY KEY(id_model)
 CREATE TABLE avio(
 id_avio integer NOT NULL,
 matricula varchar(20) NOT NULL,
-id_model integer NOT NULL REFERENCES modelAvio(id_model),
+id_model integer NOT NULL REFERENCES model_avio(id_model),
 CONSTRAINT avio_pk PRIMARY KEY(id_avio)
 );
 
@@ -46,9 +46,18 @@ CREATE TABLE ruta(
 	hora TIME NOT NULL,
 	id_aeroport_origen INT REFERENCES aeroport(id_aeroport),
 	d_aeroport_desti INT REFERENCES aeroport(id_aeroport),
-	id_model INT REFERENCES modelAvio(id_model),
+	id_model INT REFERENCES model_avio(id_model),
 	data DATE,
 	id_avio INT REFERENCES avio(id_avio),
 	id_pilot INT REFERENCES pilot(id_pilot),
 	incidencies BOOLEAN
 );
+
+CREATE TABLE usuari(
+	id INTEGER PRIMARY KEY,
+	usr VARCHAR(30) NOT NULL,
+	pwd VARCHAR(30) NOT NULL
+);
+
+INSERT INTO usuari (usr, pwd) VALUES
+	(1,'admin','qwerty'), (2,'enric','biosca'), (3,'user','1234');

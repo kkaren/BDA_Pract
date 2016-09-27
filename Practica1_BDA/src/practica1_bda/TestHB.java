@@ -35,8 +35,42 @@ public class TestHB {
 	public static void main(String[] args) {
             Session session = getSessionFactory().openSession();
             // Local variable
+            
             int swValue;
+            String user,password;
             boolean acabar = FALSE;
+            
+            do {
+                System.out.println("Entra l'usuari (pista: hi ha un usuari que es diu 'admin'):");
+                user = Keyin.inString();
+                System.out.println("Entra la contrasenya (pista: la contrasenya de l'usuari admin es 'qwerty'): ");
+                password = Keyin.inString();
+                List <Usuari> usuaris = new ArrayList<Usuari>();
+                Query q = session.createQuery("from Usuari");
+                usuaris = q.list();
+                boolean trobat = FALSE;
+                int i = 0;
+                System.out.println("NUM USRS: "+usuaris.size());
+                Usuari usr = new Usuari();
+                while(!trobat && i<usuaris.size()){
+                    usr = usuaris.get(i);
+                    if(usr.getNom_usuari().equals(user)) {
+                        if(usuaris.get(i).getPassword().equals(password)){
+                            System.out.println("Login success");
+                            trobat = TRUE;
+                            acabar = TRUE;
+                            i+=usuaris.size()+1;
+                        }else{
+                            System.out.println("Wrong Password (It's not that difficult!)");
+                            i+=usuaris.size()+1;
+                        }
+                    } else {
+                        i++;
+                    }
+                }
+                
+            }while(!acabar);
+            acabar = FALSE;
 
             do {
                 

@@ -17,12 +17,12 @@ public class Usuari implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Integer id;
+    private Integer id; 
 
-    @Column(name="nom_usuari")
+    @Column(name="usr")
     private String nom_usuari;
     
-    @Column(name="password")
+    @Column(name="pwd")
     private String password;
     
     public Usuari() {

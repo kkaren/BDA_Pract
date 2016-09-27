@@ -25,5 +25,6 @@
     <mapping class="practica1_bda.ModelAvio"/>
     <mapping class="practica1_bda.Pilot"/>
     <mapping class="practica1_bda.Ruta"/>
+    <mapping class="practica1_bda.Usuari"/>
   </session-factory>
 </hibernate-configuration>
