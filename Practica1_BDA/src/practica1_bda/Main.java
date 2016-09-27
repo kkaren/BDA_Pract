@@ -5,6 +5,7 @@ import static java.lang.Boolean.TRUE;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -266,19 +267,28 @@ public class Main {
                 List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
                 listado2 = showModelsAvio(session);
                 if(!listado2.isEmpty()){
+                    boolean acabar = FALSE;
+                    String resposta;
                     System.out.println("Model Avio: ");
-                    sel = sc.nextInt();
-
-                    ModelAvio model = listado2.get(sel-1);
-
-                    //Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
                     Pilot p = new Pilot(nom, cognom, hores, aero);
-                    p.addModel(model);
-                    // BUCLE PER AFEGIR MES D'UN MODEL !
+                    do {
+                        
+                        sel = sc.nextInt();
+                        ModelAvio model = listado2.get(sel-1);
 
+                        p.addModel(model);
+                        // BUCLE PER AFEGIR MES D'UN MODEL !
+                        System.out.println("Vols afegir algun model mes? (s/n)");
+                        resposta = sc.next();
+                        if(!resposta.equals("s")){
+                            acabar =TRUE;
+                        }
+                        System.out.println("Model avio: ");
+                        
+                    }while(!acabar);
+                   
                     session.save(p);
                     session.getTransaction().commit();
-
                     System.out.println("Successfully created "+ p.toString());
                     sc.nextLine();
                 } else {
@@ -700,15 +710,29 @@ public class Main {
                     listado3 = showModelsAvio(session);
                     if(!listado3.isEmpty()){
                         System.out.println("Model Avio: ");
-                        sel = sc.nextInt();
-
-                        ModelAvio model = listado3.get(sel-1);
 
                         pilot.setNom(nom);
                         pilot.setCognom(cognom);
                         pilot.setHores_vol(hores);
                         pilot.setAeroport(aero);
-                        pilot.addModel(model);
+                        Set<ModelAvio> models = new HashSet<ModelAvio>();
+                        pilot.setModels(models);
+                        boolean acabar = FALSE;
+                        String resposta;
+
+                        do {
+                            sel = sc.nextInt();
+                            ModelAvio model = listado3.get(sel-1);
+                            pilot.addModel(model);
+                            System.out.println("Vols afegir algun model mes? (s/n)");
+                            resposta = sc.next();
+                            if(!resposta.equals("s")){
+                                acabar =TRUE;
+                            }
+                            System.out.println("Model Avio: ");
+
+                        }while(!acabar);
+                        
                     } else {
                         System.out.println("No hi ha models disponibles");
                     }
