@@ -688,9 +688,13 @@ public class TestHB {
 
                         Pilot pilot = listado3.get(sel-1);
 
+                        System.out.println("Incidencies: ");
+                        String incidencies = sc.nextLine();
+                
                         ruta.setData(data);
                         ruta.setAvio(avio);
                         ruta.setPilot(pilot);
+                        ruta.setIncidencies(incidencies);
                     } else {
                         System.out.println("No hi ha pilots disponibles");
                     }
@@ -704,7 +708,7 @@ public class TestHB {
             }
         
         }
-
+        
         private static List<Aeroport> showAeroports(Session session){
             System.out.println("=========== Aeroports ===========");
             Scanner sc = new Scanner(System.in);
