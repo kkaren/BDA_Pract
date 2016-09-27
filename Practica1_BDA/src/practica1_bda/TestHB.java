@@ -161,28 +161,25 @@ public class TestHB {
             System.out.println("Matricula: ");
             String matricula = sc.nextLine();
             
-            System.out.println("---------- Models Avio ----------");
+            
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
-            Query q = session.createQuery("from ModelAvio");
-            listado = q.list();
-            int i = 1;
-            
-            for (ModelAvio model : listado) {
-                System.out.println(i+"."+model.getNom());
-                i++;
+            listado = showModelsAvio(session);
+            if(!listado.isEmpty()){
+                System.out.println("Model Avio: ");
+                int sel = sc.nextInt();
+
+                ModelAvio m = listado.get(sel-1);
+
+                Avio a2 = new Avio(matricula, m);
+
+                session.save(a2);
+                session.getTransaction().commit();
+
+                System.out.println("Successfully created "+ a2.toString());
+                sc.nextLine();
+            } else {
+                System.out.println("No hi ha models disponibles");
             }
-            System.out.println("Model Avio: ");
-            int sel = sc.nextInt();
-            
-            ModelAvio m = listado.get(sel-1);
-                
-            Avio a2 = new Avio(matricula, m);
-        
-            session.save(a2);
-            session.getTransaction().commit();
-            
-            System.out.println("Successfully created "+ a2.toString());
-            sc.nextLine();
         }
                 
         public static void createPilot(Session session, Scanner sc){
@@ -196,46 +193,34 @@ public class TestHB {
             System.out.println("Hores Vol: ");
             int hores = sc.nextInt();        
             
-            System.out.println("---------- Aeroports ----------");
             List<Aeroport> listado = new ArrayList<Aeroport>();
-            Query q = session.createQuery("from Aeroport");
-            listado = q.list();
-            int i = 1;
-            
-            for (Aeroport aero : listado) {
-                System.out.println(i+"."+aero.getCodi_int());
-                i++;
+            listado = showAeroports(session);
+            if(!listado.isEmpty()){
+                System.out.println("Aeroport Base: ");
+                int sel = sc.nextInt();
+
+                Aeroport aero = listado.get(sel-1);
+
+                List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
+                listado2 = showModelsAvio(session);
+                System.out.println("Model Avio: ");
+                sel = sc.nextInt();
+
+                ModelAvio model = listado2.get(sel-1);
+
+                //Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
+                Pilot p = new Pilot(nom, cognom, hores, aero);
+                p.addModel(model);
+                // BUCLE PER AFEGIR MES D'UN MODEL !
+
+                session.save(p);
+                session.getTransaction().commit();
+
+                System.out.println("Successfully created "+ p.toString());
+                sc.nextLine();
+            } else {
+                System.out.println("No hi ha aeroports disponibles");
             }
-            System.out.println("Aeroport Base: ");
-            int sel = sc.nextInt();
-            
-            Aeroport aero = listado.get(sel-1);
-            
-            System.out.println("-------- Models Avio --------");
-            List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
-            q = session.createQuery("from ModelAvio");
-            listado2 = q.list();
-            i = 1;
-  
-            for (ModelAvio model : listado2) {
-                System.out.println(i+"."+model.getNom());
-                i++;
-            }
-            System.out.println("Model Avio: ");
-            sel = sc.nextInt();
-            
-            ModelAvio model = listado2.get(sel-1);
-            
-            //Pilot p = new Pilot("Pepito", "Martinez", 125, aero);
-            Pilot p = new Pilot(nom, cognom, hores, aero);
-            p.addModel(model);
-            // BUCLE PER AFEGIR MES D'UN MODEL !
-            
-            session.save(p);
-            session.getTransaction().commit();
-            
-            System.out.println("Successfully created "+ p.toString());
-            sc.nextLine();
         }
         
         public static void createRuta(Session session, Scanner sc){
@@ -249,45 +234,35 @@ public class TestHB {
             String[] h = hora.split(":");
             Time t = new Time(Integer.parseInt(h[0]), Integer.parseInt(h[1]), Integer.parseInt(h[2]));
           
-            System.out.println("---------- Aeroports ----------");          
+                    
             List<Aeroport> listado = new ArrayList<Aeroport>();
-            Query q = session.createQuery("from Aeroport");
-            listado = q.list();
-            int i = 1;
+            listado = showAeroports(session);
+            if(!listado.isEmpty()){
+                System.out.println("Aeroport Origen: ");
+                int sel = sc.nextInt();
+                Aeroport aero_origen = listado.get(sel-1);
 
-            for (Aeroport aero : listado) {
-                System.out.println(i+"."+aero.getCodi_int());
-                i++;
+                System.out.println("Aeroport Desti: ");
+                sel = sc.nextInt();
+                Aeroport aero_desti = listado.get(sel-1);
+
+                List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
+                listado2 = showModelsAvio(session);
+                System.out.println("Model Avio: ");
+                sel = sc.nextInt();
+
+                ModelAvio model = listado2.get(sel-1);
+
+                Ruta r = new Ruta(dia, t, aero_origen, aero_desti, model);
+                session.save(r);
+                session.getTransaction().commit();
+
+                System.out.println("Successfully created "+ r.toString());
+                sc.nextLine();
+            } else {
+                System.out.println("No hi ha aeroports disponibles");
             }
-            System.out.println("Aeroport Origen: ");
-            int sel = sc.nextInt();
-            Aeroport aero_origen = listado.get(sel-1);
             
-            System.out.println("Aeroport Desti: ");
-            sel = sc.nextInt();
-            Aeroport aero_desti = listado.get(sel-1);
-            
-            System.out.println("---------- Models Avio ----------");
-            List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
-            q = session.createQuery("from ModelAvio");
-            listado2 = q.list();
-            i = 1;
-            
-            for (ModelAvio model : listado2) {
-                System.out.println(i+"."+model.getNom());
-                i++;
-            }
-            System.out.println("Model Avio: ");
-            sel = sc.nextInt();
-            
-            ModelAvio model = listado2.get(sel-1);
-            
-            Ruta r = new Ruta(dia, t, aero_origen, aero_desti, model);
-            session.save(r);
-            session.getTransaction().commit();
-            
-            System.out.println("Successfully created "+ r.toString());
-            sc.nextLine();
         }
         
         public static void readAeroport(Session session){
@@ -371,6 +346,302 @@ public class TestHB {
         
         
         private static void deleteAeroport(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            listado = showAeroports(session);
+            if(!listado.isEmpty()){
+                System.out.println("Aeroport: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Aeroport aero = listado.get(sel-1);
+
+                session.delete(aero);
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha aeroports disponibles");
+            }
+        }
+
+        private static void deleteModelAvio(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<ModelAvio> listado = new ArrayList<ModelAvio>();
+            listado = showModelsAvio(session);
+            if(!listado.isEmpty()){
+                System.out.println("Model Avio: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                ModelAvio model = listado.get(sel-1);
+
+                List<Pilot> listado3 = new ArrayList<Pilot>();
+                Query q3 = session.createQuery("from Pilot");
+                listado3 = q3.list();
+
+                for(Pilot pilot : listado3){
+                    pilot.deleteModel(model);
+                }
+
+                session.delete(model);
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha models disponibles");
+            }
+        }
+
+        private static void deleteAvio(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Avio> listado = new ArrayList<Avio>();
+            listado = showAvions(session);
+            if(!listado.isEmpty()){
+                System.out.println("Avio: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Avio avio = listado.get(sel-1);
+                session.delete(avio);
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha avions disponibles");
+            }
+        }
+
+        private static void deletePilot(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Pilot> listado = new ArrayList<Pilot>();
+            listado = showPilots(session);
+            if(!listado.isEmpty()){
+                System.out.println("Pilot: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Pilot pilot = listado.get(sel-1);
+                session.delete(pilot);
+                session.getTransaction().commit(); 
+            } else {
+                System.out.println("No hi ha pilots disponibles");
+            }
+        }
+
+        private static void deleteRuta(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Ruta> listado = new ArrayList<Ruta>();
+            listado = showRutes(session);
+            if(!listado.isEmpty()){
+                System.out.println("Ruta: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Ruta ruta = listado.get(sel-1);
+                session.delete(ruta);
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha rutes disponibles");
+            }
+        }
+        
+        private static void editAeroport(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Aeroport> listado = new ArrayList<Aeroport>();
+            listado = showAeroports(session);
+            if(!listado.isEmpty()){
+                System.out.println("Aeroport: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Aeroport aero = (Aeroport) session.load(Aeroport.class,listado.get(sel-1).getId());
+                sc.nextLine();
+                System.out.println("Codi internacional: ");
+                String codi = sc.nextLine();
+                System.out.println("Nom: ");
+                String nom = sc.nextLine();
+                System.out.println("Ciutat: ");
+                String ciutat = sc.nextLine();
+                System.out.println("Cost handling: ");
+                double cost = sc.nextDouble();
+                aero.setCodi_int(codi);
+                aero.setCiutat(ciutat);            
+                aero.setNom(nom);
+                aero.setCost_handling(cost);
+                session.getTransaction().commit();
+                
+            } else {
+                System.out.println("No hi ha aeroports disponibles");
+            }
+        }
+
+        private static void editModelAvio(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<ModelAvio> listado = new ArrayList<ModelAvio>();
+            listado = showModelsAvio(session);
+            if(!listado.isEmpty()){
+                System.out.println("Model Avio: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                ModelAvio model = (ModelAvio) session.load(ModelAvio.class,listado.get(sel-1).getId());
+                sc.nextLine();
+                System.out.println("Nom: ");
+                String nom = sc.nextLine();
+                System.out.println("Descripcio: ");
+                String desc = sc.nextLine();
+                System.out.println("Places: ");
+                int places = sc.nextInt();
+                System.out.println("Pes: ");
+                double pes = sc.nextDouble();
+
+                model.setNom(nom);
+                model.setDescripcio(desc);            
+                model.setPlaces(places);
+                model.setPes(pes);
+                session.getTransaction().commit();
+                
+            } else {
+                System.out.println("No hi ha models disponibles");
+            }
+        }
+
+        private static void editAvio(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Avio> listado = new ArrayList<Avio>();
+            listado = showAvions(session);
+            if(!listado.isEmpty()){
+                System.out.println("Avio: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Avio avio = (Avio) session.load(Avio.class,listado.get(sel-1).getId());
+                sc.nextLine();
+
+                System.out.println("Matricula: ");
+                String matricula = sc.nextLine();
+
+                List<ModelAvio> listado2 = new ArrayList<ModelAvio>();
+                listado2 = showModelsAvio(session);
+                if(!listado2.isEmpty()){
+                    System.out.println("Model Avio: ");
+                    sel = sc.nextInt();
+
+                    ModelAvio m = listado2.get(sel-1);
+
+                    avio.setMatricula(matricula);
+                    avio.setModelAvio(m);
+                    //session.update(avio);
+                    
+                } else {
+                    System.out.println("No hi ha models disponibles");
+                }
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha avions disponibles");
+            }
+        }
+
+        private static void editPilot(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Pilot> listado = new ArrayList<Pilot>();
+            listado = showPilots(session);
+            if(!listado.isEmpty()){
+                System.out.println("Pilot: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Pilot pilot = (Pilot) session.load(Pilot.class,listado.get(sel-1).getId());
+                sc.nextLine();
+                System.out.println("Nom: ");
+                String nom = sc.nextLine();
+                System.out.println("Cognom: ");
+                String cognom = sc.nextLine();
+                System.out.println("Hores Vol: ");
+                int hores = sc.nextInt();        
+
+                List<Aeroport> listado2 = new ArrayList<Aeroport>();
+                listado2 = showAeroports(session);
+                if(!listado2.isEmpty()){
+                    System.out.println("Aeroport Base: ");
+                    sel = sc.nextInt();
+
+                    Aeroport aero = listado2.get(sel-1);
+
+                    List<ModelAvio> listado3 = new ArrayList<ModelAvio>();
+                    listado3 = showModelsAvio(session);
+                    System.out.println("Model Avio: ");
+                    sel = sc.nextInt();
+
+                    ModelAvio model = listado3.get(sel-1);
+
+                    pilot.setNom(nom);
+                    pilot.setCognom(cognom);
+                    pilot.setHores_vol(hores);
+                    pilot.setAeroport(aero);
+                    pilot.addModel(model);
+
+                } else {
+                    System.out.println("No hi ha aeroports disponibles");
+                }
+                session.getTransaction().commit();
+            } else {
+                System.out.println("No hi ha pilots disponibles");
+            }
+        }
+
+        private static void editRuta(Session session) {
+            Scanner sc = new Scanner(System.in);
+            List<Ruta> listado = new ArrayList<Ruta>();
+            listado = showRutes(session);
+            if(!listado.isEmpty()){
+                System.out.println("Ruta: ");
+                int sel = sc.nextInt();
+
+                session.beginTransaction();
+                Ruta ruta = (Ruta) session.load(Ruta.class,listado.get(sel-1).getId());
+                sc.nextLine();
+
+                System.out.println("Dia: ");
+                String dia = sc.nextLine();
+                System.out.println("Hora: (hh:mm:ss) ");
+                String hora = sc.nextLine();
+                String[] h = hora.split(":");
+                Time t = new Time(Integer.parseInt(h[0]), Integer.parseInt(h[1]), Integer.parseInt(h[2]));
+
+                List<Aeroport> listado2 = new ArrayList<Aeroport>();
+                listado2 = showAeroports(session);
+                if(!listado2.isEmpty()){
+                    System.out.println("Aeroport Origen: ");
+                    sel = sc.nextInt();
+                    Aeroport aero_origen = listado2.get(sel-1);
+
+                    System.out.println("Aeroport Desti: ");
+                    sel = sc.nextInt();
+                    Aeroport aero_desti = listado2.get(sel-1);
+
+                    List<ModelAvio> listado3 = new ArrayList<ModelAvio>();
+                    listado3 = showModelsAvio(session);
+                    System.out.println("Model Avio: ");
+                    sel = sc.nextInt();
+
+                    ModelAvio model = listado3.get(sel-1);
+
+                    ruta.setDia(dia);
+                    ruta.setHora(t);
+                    ruta.setAeroport_origen(aero_origen);
+                    ruta.setAeroport_desti(aero_desti);
+                    ruta.setModel_avio(model);
+                } else {
+                    System.out.println("No hi ha aeroports disponibles");
+                }
+                session.getTransaction().commit();
+        
+            } else {
+                System.out.println("No hi ha rutes disponibles");
+            }
+        }
+
+        private static void programarRuta(Session session){
+            
+        }
+
+        private static List<Aeroport> showAeroports(Session session){
             System.out.println("---------- Aeroports ----------");
             Scanner sc = new Scanner(System.in);
             List<Aeroport> listado = new ArrayList<Aeroport>();
@@ -382,20 +653,11 @@ public class TestHB {
                 System.out.println(i+"."+aero.getCodi_int());
                 i++;
             }
-            System.out.println("Aeroport: ");
-            int sel = sc.nextInt();
-           
-            session.beginTransaction();
-            Aeroport aero = listado.get(sel-1);
             
-            session.delete(aero);
-            session.getTransaction().commit();
-            
+            return listado;
         }
-
-        private static void deleteModelAvio(Session session) {
+        private static List<ModelAvio> showModelsAvio(Session session){
             System.out.println("---------- Models Avio ----------");
-            Scanner sc = new Scanner(System.in);
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
             Query q = session.createQuery("from ModelAvio");
             listado = q.list();
@@ -405,28 +667,12 @@ public class TestHB {
                 System.out.println(i+"."+model.getNom());
                 i++;
             }
-            System.out.println("Model Avio: ");
-            int sel = sc.nextInt();
-            
-            session.beginTransaction();
-            ModelAvio model = listado.get(sel-1);
-            
-            List<Pilot> listado3 = new ArrayList<Pilot>();
-            Query q3 = session.createQuery("from Pilot");
-            listado3 = q3.list();
-            
-            for(Pilot pilot : listado3){
-                pilot.deleteModel(model);
-            }
-
-            session.delete(model);
-            session.getTransaction().commit();
-            
+        
+            return listado;
         }
-
-        private static void deleteAvio(Session session) {
-            System.out.println("----------- Avions -----------");
-            Scanner sc = new Scanner(System.in);
+        
+        private static List<Avio> showAvions(Session session){
+            System.out.println("------------ Avions ------------");          
             List<Avio> listado = new ArrayList<Avio>();
             Query q = session.createQuery("from Avio");
             listado = q.list();
@@ -436,18 +682,13 @@ public class TestHB {
                 System.out.println(i+"."+avio.getMatricula());
                 i++;
             }
-            System.out.println("Avio: ");
-            int sel = sc.nextInt();
             
-            session.beginTransaction();
-            Avio avio = listado.get(sel-1);
-            session.delete(avio);
-            session.getTransaction().commit();
-        }
+            return listado;
 
-        private static void deletePilot(Session session) {
-        System.out.println("----------- Pilots -----------");
-            Scanner sc = new Scanner(System.in);
+        }
+        
+        private static List<Pilot> showPilots(Session session){
+            System.out.println("----------- Pilots -----------");
             List<Pilot> listado = new ArrayList<Pilot>();
             Query q = session.createQuery("from Pilot");
             listado = q.list();
@@ -457,18 +698,12 @@ public class TestHB {
                 System.out.println(i+"."+pilot.getNom()+pilot.getCognom());
                 i++;
             }
-            System.out.println("Pilot: ");
-            int sel = sc.nextInt();
             
-            session.beginTransaction();
-            Pilot pilot = listado.get(sel-1);
-            session.delete(pilot);
-            session.getTransaction().commit();    
+            return listado;
         }
-
-        private static void deleteRuta(Session session) {
+        
+        private static List<Ruta> showRutes(Session session){
             System.out.println("----------- Rutes -----------");
-            Scanner sc = new Scanner(System.in);
             List<Ruta> listado = new ArrayList<Ruta>();
             Query q = session.createQuery("from Ruta");
             listado = q.list();
@@ -478,78 +713,9 @@ public class TestHB {
                 System.out.println(i+"."+ruta);
                 i++;
             }
-            System.out.println("Ruta: ");
-            int sel = sc.nextInt();
-            
-            session.beginTransaction();
-            Ruta ruta = listado.get(sel-1);
-            session.delete(ruta);
-            session.getTransaction().commit();
+            return listado;
         }
         
-        private static void editAeroport(Session session) {
-            System.out.println("---------- Aeroports ----------");
-            Scanner sc = new Scanner(System.in);
-            List<Aeroport> listado = new ArrayList<Aeroport>();
-            Query q = session.createQuery("from Aeroport");
-            listado = q.list();
-            int i = 1;
-            
-            for (Aeroport aero : listado) {
-                System.out.println(i+"."+aero.getCodi_int());
-                i++;
-            }
-            System.out.println("Aeroport: ");
-            int sel = sc.nextInt();
-            session.beginTransaction();
-            Aeroport aero = (Aeroport) session.load(Aeroport.class,listado.get(sel-1).getId());
-            sc.nextLine();
-            System.out.println("Codi internacional: ");
-            String codi = sc.nextLine();
-            System.out.println("Nom: ");
-            String nom = sc.nextLine();
-            System.out.println("Ciutat: ");
-            String ciutat = sc.nextLine();
-            System.out.println("Cost handling: ");
-            double cost = sc.nextDouble();
-            aero.setCodi_int(codi);
-            aero.setCiutat(ciutat);            
-            aero.setNom(nom);
-            aero.setCost_handling(cost);
-            session.getTransaction().commit();
-            System.out.println("TAULA DESPRES DE UPDATES: ");
-            listado = new ArrayList<Aeroport>();
-            q = session.createQuery("from Aeroport");
-            listado = q.list();
-            i = 1;           
-            for (Aeroport aero1 : listado) {
-                System.out.println(aero1);
-                i++;
-            }
-            
-
-        }
-
-        private static void editModelAvio(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static void editAvio(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static void editPilot(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static void editRuta(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static void programarRuta(Session session){
-            
-        }
-
         private static void menu_consultar(Session session) {
         // Local variable
             int swValue;
