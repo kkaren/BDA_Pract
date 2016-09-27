@@ -6,10 +6,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
+/**
+ *
+ * @author judit
+ */
 @SuppressWarnings("deprecation")
 public class ConnectorHB {
     private static SessionFactory sf = null;
     
+    /**
+     *
+     */
     public ConnectorHB() {
 
     }
@@ -26,6 +33,10 @@ public class ConnectorHB {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static Session getSession(){
         Session session = sf.openSession();
         return session;

@@ -80,62 +80,122 @@ public class Pilot implements Serializable {
         this.models = new HashSet<ModelAvio>();
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCognom() {
         return cognom;
     }
 
+    /**
+     *
+     * @param cognom
+     */
     public void setCognom(String cognom) {
         this.cognom = cognom;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getHores_vol() {
         return hores_vol;
     }
 
+    /**
+     *
+     * @param hores_vol
+     */
     public void setHores_vol(Integer hores_vol) {
         this.hores_vol = hores_vol;
     }
 
+    /**
+     *
+     * @return
+     */
     public Aeroport getAeroport() {
         return aeroport;
     }
 
+    /**
+     *
+     * @param aeroport
+     */
     public void setAeroport(Aeroport aeroport) {
         this.aeroport = aeroport;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<ModelAvio> getModels() {
         return models;
     }
 
+    /**
+     *
+     * @param models
+     */
     public void setModels(Set<ModelAvio> models) {
         this.models = models;
     }
     
+    /**
+     *
+     * @param a
+     */
     public void addModel(ModelAvio a){
         this.models.add(a);
     }
     
+    /**
+     *
+     * @param a
+     */
     public void deleteModel(ModelAvio a){
         this.models.remove(a);
     }    
     
+    /**
+     *
+     * @return
+     */
     public Set<String> getModelsNames() {
         Set<String> n = new HashSet<String>();
         for (ModelAvio model: this.models){

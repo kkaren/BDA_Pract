@@ -93,38 +93,74 @@ public class Aeroport implements Serializable{
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCodi_int() {
         return codi_int;
     }
 
+    /**
+     *
+     * @param codi_int
+     */
     public void setCodi_int(String codi_int) {
         this.codi_int = codi_int;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCiutat() {
         return ciutat;
     }
 
+    /**
+     *
+     * @param ciutat
+     */
     public void setCiutat(String ciutat) {
         this.ciutat = ciutat;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCost_handling() {
         return cost_handling;
     }
 
+    /**
+     *
+     * @param cost_handling
+     */
     public void setCost_handling(double cost_handling) {
         this.cost_handling = cost_handling;
     }

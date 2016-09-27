@@ -88,50 +88,98 @@ public class ModelAvio implements Serializable {
         //this.pilots = pilots;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescripcio() {
         return descripcio;
     }
 
+    /**
+     *
+     * @param descripcio
+     */
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getPlaces() {
         return places;
     }
 
+    /**
+     *
+     * @param places
+     */
     public void setPlaces(Integer places) {
         this.places = places;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPes() {
         return pes;
     }
 
+    /**
+     *
+     * @param pes
+     */
     public void setPes(double pes) {
         this.pes = pes;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<Pilot> getPilots() {
         return pilots;
     }
 
+    /**
+     *
+     * @param pilots
+     */
     public void setPilots(Set<Pilot> pilots) {
         this.pilots = pilots;
     }

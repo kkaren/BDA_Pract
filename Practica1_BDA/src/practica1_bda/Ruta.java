@@ -123,82 +123,162 @@ public class Ruta implements Serializable {
         this.incidencies = incidencies;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDia() {
         return dia;
     }
 
+    /**
+     *
+     * @param dia
+     */
     public void setDia(String dia) {
         this.dia = dia;
     }
 
+    /**
+     *
+     * @return
+     */
     public Time getHora() {
         return hora;
     }
 
+    /**
+     *
+     * @param hora
+     */
     public void setHora(Time hora) {
         this.hora = hora;
     }
 
+    /**
+     *
+     * @return
+     */
     public Aeroport getAeroport_origen() {
         return aeroport_origen;
     }
 
+    /**
+     *
+     * @param aeroport_origen
+     */
     public void setAeroport_origen(Aeroport aeroport_origen) {
         this.aeroport_origen = aeroport_origen;
     }
 
+    /**
+     *
+     * @return
+     */
     public Aeroport getAeroport_desti() {
         return aeroport_desti;
     }
 
+    /**
+     *
+     * @param aeroport_desti
+     */
     public void setAeroport_desti(Aeroport aeroport_desti) {
         this.aeroport_desti = aeroport_desti;
     }
 
+    /**
+     *
+     * @return
+     */
     public ModelAvio getModel_avio() {
         return model_avio;
     }
 
+    /**
+     *
+     * @param model_avio
+     */
     public void setModel_avio(ModelAvio model_avio) {
         this.model_avio = model_avio;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getData() {
         return data;
     }
 
+    /**
+     *
+     * @param data
+     */
     public void setData(Date data) {
         this.data = data;
     }
 
+    /**
+     *
+     * @return
+     */
     public Avio getAvio() {
         return avio;
     }
 
+    /**
+     *
+     * @param avio
+     */
     public void setAvio(Avio avio) {
         this.avio = avio;
     }
 
+    /**
+     *
+     * @return
+     */
     public Pilot getPilot() {
         return pilot;
     }
 
+    /**
+     *
+     * @param pilot
+     */
     public void setPilot(Pilot pilot) {
         this.pilot = pilot;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIncidencies() {
         return incidencies;
     }
 
+    /**
+     *
+     * @param incidencies
+     */
     public void setIncidencies(String incidencies) {
         this.incidencies = incidencies;
     }

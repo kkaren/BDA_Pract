@@ -57,26 +57,50 @@ public class Usuari implements Serializable {
         this.password = password;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom_usuari() {
         return nom_usuari;
     }
 
+    /**
+     *
+     * @param nom_usuari
+     */
     public void setNom_usuari(String nom_usuari) {
         this.nom_usuari = nom_usuari;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

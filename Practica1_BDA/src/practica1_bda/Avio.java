@@ -61,26 +61,50 @@ public class Avio implements Serializable {
         this.modelAvio = modelAvio;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMatricula() {
         return matricula;
     }
 
+    /**
+     *
+     * @param matricula
+     */
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
+    /**
+     *
+     * @return
+     */
     public ModelAvio getModelAvio() {
         return modelAvio;
     }
 
+    /**
+     *
+     * @param modelAvio
+     */
     public void setModelAvio(ModelAvio modelAvio) {
         this.modelAvio = modelAvio;
     }
