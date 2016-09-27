@@ -8,7 +8,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- *
+ * Classe usuari
  * @author Karen i Judit
  */
 @Entity
@@ -25,11 +25,20 @@ public class Usuari implements Serializable {
     @Column(name="pwd")
     private String password;
     
+    /**
+     * Constructor buit
+     */
     public Usuari() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Constructor amb tots els paramaetres
+     * @param id
+     * @param nom_usuari
+     * @param password 
+     */
     public Usuari(Integer id, String nom_usuari, String password) {
         super();
         this.id = id;
@@ -37,6 +46,11 @@ public class Usuari implements Serializable {
         this.password = password;
     }
     
+    /**
+     * Constructor sense id, es genera automaticament
+     * @param nom_usuari
+     * @param password 
+     */
     public Usuari(String nom_usuari, String password) {
         super();
         this.nom_usuari = nom_usuari;

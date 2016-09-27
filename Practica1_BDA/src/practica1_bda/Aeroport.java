@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 /**
- *
+ * Classe de l'entitat aeroport
  * @author Karen i Judit
  */
 @Entity
@@ -43,11 +43,22 @@ public class Aeroport implements Serializable{
     private Set<Pilot> pilots;
 
     
+    /**
+     * Constructor buit
+     */
     public Aeroport() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Constructor amb tots els parametres
+     * @param id
+     * @param codi_int
+     * @param nom
+     * @param ciutat
+     * @param cost_handling 
+     */
     public Aeroport(Integer id, String codi_int, String nom, String ciutat,
         double cost_handling) {
         super();
@@ -58,7 +69,13 @@ public class Aeroport implements Serializable{
         this.cost_handling = cost_handling;
     }
 
-
+    /**
+     * Constructor sense id, es crea automaticament
+     * @param codi_int
+     * @param nom
+     * @param ciutat
+     * @param cost_handling 
+     */
     public Aeroport(String codi_int, String nom, String ciutat,
         double cost_handling) {
         super(); 
@@ -68,6 +85,10 @@ public class Aeroport implements Serializable{
         this.cost_handling = cost_handling;
     }
 
+    /**
+     * get id
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
@@ -108,6 +129,10 @@ public class Aeroport implements Serializable{
         this.cost_handling = cost_handling;
     }
 
+    /**
+     * To string
+     * @return 
+     */
     @Override
     public String toString() {
         //return "Aeroport{" + "id=" + id + ", codi_int=" + codi_int + ", nom=" + nom + ", ciutat=" + ciutat + ", cost_handling=" + cost_handling + '}';

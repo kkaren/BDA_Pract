@@ -12,7 +12,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 /**
- *
+ * Classe de l'entitat ruta
  * @author Karen i Judit
  */
 @Entity
@@ -54,11 +54,23 @@ public class Ruta implements Serializable {
     @Column(name="incidencies")
     private String incidencies;
      
+    /**
+     * Constructor buit
+     */
     public Ruta() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Constructor amb tots els parametres obligatoris
+     * @param id
+     * @param dia
+     * @param hora
+     * @param aeroport_origen
+     * @param aeroport_desti
+     * @param model_avio 
+     */
     public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio) {
         this.id = id;
         this.dia = dia;
@@ -68,6 +80,14 @@ public class Ruta implements Serializable {
         this.model_avio = model_avio;
     }
     
+    /**
+     * Constructor sense id, es genera automaticament.
+     * @param dia
+     * @param hora
+     * @param aeroport_origen
+     * @param aeroport_desti
+     * @param model_avio 
+     */
     public Ruta(String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio) {
         this.dia = dia;
         this.hora = hora; 
@@ -76,6 +96,19 @@ public class Ruta implements Serializable {
         this.model_avio = model_avio;
     }
     
+    /**
+     * Constructor amb tots els parametres (inclosos els opcionals)
+     * @param id
+     * @param dia
+     * @param hora
+     * @param aeroport_origen
+     * @param aeroport_desti
+     * @param model_avio
+     * @param data
+     * @param avio
+     * @param pilot
+     * @param incidencies 
+     */
     public Ruta(Integer id, String dia, Time hora, Aeroport aeroport_origen, Aeroport aeroport_desti, ModelAvio model_avio, 
              Date data, Avio avio, Pilot pilot, String incidencies) {
         this.id = id;

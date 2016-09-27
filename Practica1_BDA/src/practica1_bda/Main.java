@@ -25,7 +25,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-public class TestHB {
+/**
+ * Main de l'aplicacio
+ * @author Kaern i Judit
+ */
+public class Main {
         private static SessionFactory sessionFactory;
         private static ServiceRegistry serviceRegistry;
 	/**
@@ -50,7 +54,6 @@ public class TestHB {
                 usuaris = q.list();
                 boolean trobat = FALSE;
                 int i = 0;
-                System.out.println("NUM USRS: "+usuaris.size());
                 Usuari usr = new Usuari();
                 while(!trobat && i<usuaris.size()){
                     usr = usuaris.get(i);
@@ -124,6 +127,10 @@ public class TestHB {
             
 	}
         
+        /**
+         * 
+         * @return 
+         */
         public static SessionFactory getSessionFactory() {
             Configuration configuration = new Configuration();
             configuration.configure();
@@ -133,6 +140,11 @@ public class TestHB {
             
         }
         
+        /**
+         * Crea un aeroport
+         * @param session
+         * @param sc 
+         */
         public static void createAeroport(Session session, Scanner sc){
             System.out.println("==========CREATE AEROPORT==============");
             session.beginTransaction();
@@ -161,6 +173,11 @@ public class TestHB {
             
         }
         
+        /**
+         * 
+         * @param session
+         * @param sc 
+         */
         public static void createModelAvio(Session session, Scanner sc){
             System.out.println("==========CREATE MODEL AVIO==============");
             session.beginTransaction();
@@ -189,6 +206,11 @@ public class TestHB {
             sc.nextLine();
         }
         
+        /**
+         * 
+         * @param session
+         * @param sc 
+         */
         public static void createAvio(Session session, Scanner sc){
             System.out.println("==========CREATE AVIO ==============");
             session.beginTransaction();
@@ -217,6 +239,11 @@ public class TestHB {
             }
         }
                 
+        /**
+         * 
+         * @param session
+         * @param sc 
+         */
         public static void createPilot(Session session, Scanner sc){
             System.out.println("==========CREATE PILOT ==============");
             session.beginTransaction();
@@ -262,6 +289,11 @@ public class TestHB {
             }
         }
         
+        /**
+         * 
+         * @param session
+         * @param sc 
+         */
         public static void createRuta(Session session, Scanner sc){
             System.out.println("==========CREATE RUTA ==============");
             session.beginTransaction();
@@ -308,6 +340,10 @@ public class TestHB {
             
         }
         
+        /**
+         * 
+         * @param session 
+         */
         public static void readAeroport(Session session){
             System.out.println("---------- Aeroports ----------");          
             List<Aeroport> listado = new ArrayList<Aeroport>();
@@ -322,6 +358,10 @@ public class TestHB {
             }
         }
         
+        /**
+         * 
+         * @param session 
+         */
         public static void readModelAvio(Session session){
             System.out.println("---------- Models Avio ----------");          
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
@@ -337,6 +377,10 @@ public class TestHB {
             }
         }
         
+        /**
+         * 
+         * @param session 
+         */
         public static void readAvio(Session session){
             System.out.println("------------ Avions ------------");          
             List<Avio> listado = new ArrayList<Avio>();
@@ -351,6 +395,10 @@ public class TestHB {
             }
         }
         
+        /**
+         * 
+         * @param session 
+         */
         public static void readPilot(Session session){
             System.out.println("------------ Pilots ------------");          
             List<Pilot> listado = new ArrayList<Pilot>();
@@ -366,6 +414,10 @@ public class TestHB {
             }
         }
              
+        /**
+         * 
+         * @param session 
+         */
         public static void readRuta(Session session){
             System.out.println("------------ Rutes ------------");          
             List<Ruta> listado = new ArrayList<Ruta>();
@@ -390,7 +442,10 @@ public class TestHB {
             }
         }
         
-        
+        /**
+         * 
+         * @param session 
+         */
         private static void deleteAeroport(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Aeroport> listado = new ArrayList<Aeroport>();
@@ -409,6 +464,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void deleteModelAvio(Session session) {
             Scanner sc = new Scanner(System.in);
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
@@ -435,6 +494,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void deleteAvio(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Avio> listado = new ArrayList<Avio>();
@@ -452,6 +515,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void deletePilot(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Pilot> listado = new ArrayList<Pilot>();
@@ -469,6 +536,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void deleteRuta(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Ruta> listado = new ArrayList<Ruta>();
@@ -486,6 +557,10 @@ public class TestHB {
             }
         }
         
+        /**
+         * 
+         * @param session 
+         */
         private static void editAeroport(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Aeroport> listado = new ArrayList<Aeroport>();
@@ -516,6 +591,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void editModelAvio(Session session) {
             Scanner sc = new Scanner(System.in);
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
@@ -547,6 +626,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void editAvio(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Avio> listado = new ArrayList<Avio>();
@@ -583,6 +666,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void editPilot(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Pilot> listado = new ArrayList<Pilot>();
@@ -634,6 +721,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void editRuta(Session session) {
             Scanner sc = new Scanner(System.in);
             List<Ruta> listado = new ArrayList<Ruta>();
@@ -690,6 +781,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void programarRuta(Session session){
             Scanner sc = new Scanner(System.in);
             List<Ruta> listado = new ArrayList<Ruta>();
@@ -743,6 +838,11 @@ public class TestHB {
         
         }
         
+        /**
+         * 
+         * @param session
+         * @return 
+         */
         private static List<Aeroport> showAeroports(Session session){
             System.out.println("=========== Aeroports ===========");
             Scanner sc = new Scanner(System.in);
@@ -758,6 +858,12 @@ public class TestHB {
             
             return listado;
         }
+        
+        /**
+         * 
+         * @param session
+         * @return 
+         */
         private static List<ModelAvio> showModelsAvio(Session session){
             System.out.println("=========== Models Avio ===========");
             List<ModelAvio> listado = new ArrayList<ModelAvio>();
@@ -773,6 +879,11 @@ public class TestHB {
             return listado;
         }
         
+        /**
+         * 
+         * @param session
+         * @return 
+         */
         private static List<Avio> showAvions(Session session){
             System.out.println("=========== Avions ===========");          
             List<Avio> listado = new ArrayList<Avio>();
@@ -789,6 +900,11 @@ public class TestHB {
 
         }
         
+        /**
+         * 
+         * @param session
+         * @return 
+         */
         private static List<Pilot> showPilots(Session session){
             System.out.println("=========== Pilots ===========");
             List<Pilot> listado = new ArrayList<Pilot>();
@@ -804,6 +920,11 @@ public class TestHB {
             return listado;
         }
         
+        /**
+         * 
+         * @param session
+         * @return 
+         */
         private static List<Ruta> showRutes(Session session){
             System.out.println("=========== Rutes ===========");
             List<Ruta> listado = new ArrayList<Ruta>();
@@ -818,6 +939,10 @@ public class TestHB {
             return listado;
         }
         
+        /**
+         * 
+         * @param session 
+         */
         private static void menu_consultar(Session session) {
         // Local variable
             int swValue;
@@ -863,6 +988,10 @@ public class TestHB {
             }
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void menu_afegir(Session session) {
         
         // Local variable
@@ -911,6 +1040,10 @@ public class TestHB {
     
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void menu_borrar(Session session) {
         // Local variable
             int swValue;
@@ -958,6 +1091,10 @@ public class TestHB {
     
         }
 
+        /**
+         * 
+         * @param session 
+         */
         private static void menu_modificar(Session session) {
             int swValue;
             Scanner sc = null;
@@ -1005,7 +1142,10 @@ public class TestHB {
 
 }
 
-
+/**
+ * Llegir els input del menu
+ * @author http://www.java2s.com/Code/Java/Development-Class/Javaprogramtodemonstratemenuselection.htm 
+ */
 class Keyin {
 
   //*******************************

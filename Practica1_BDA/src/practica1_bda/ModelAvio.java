@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 /**
- *
+ * Classe de l'entitat model avio
  * @author Karen i Judit
  */
 @Entity
@@ -43,12 +43,23 @@ public class ModelAvio implements Serializable {
     
     @OneToMany(mappedBy="model_avio", cascade=CascadeType.REMOVE)
     private Set<Ruta> rutes;
-     
+    
+    /**
+     * Constructor buit
+     */
     public ModelAvio() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Constructor amb tots els parametres
+     * @param id
+     * @param nom
+     * @param descripcio
+     * @param places
+     * @param pes 
+     */
     public ModelAvio(Integer id, String nom, String descripcio, Integer places, 
             double pes) { //, Set<Pilot> pilots) {
         super();
@@ -60,6 +71,13 @@ public class ModelAvio implements Serializable {
         //this.pilots = pilots;
     }
     
+    /**
+     * Constructor sense id, es genera automaticament.
+     * @param nom
+     * @param descripcio
+     * @param places
+     * @param pes 
+     */
     public ModelAvio(String nom, String descripcio, Integer places, 
             double pes) { //, Set<Pilot> pilots) {
         super();

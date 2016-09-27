@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 /**
- *
+ * Classe de l'entitat pilot
  * @author Karen i Judit
  */
 @Entity
@@ -40,11 +40,22 @@ public class Pilot implements Serializable {
     @OneToMany(mappedBy = "pilot", cascade=CascadeType.REMOVE)
     private Set<Ruta> rutes;
     
+    /**
+     * Constructor buit
+     */
     public Pilot() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Constructor amb tots els parametres
+     * @param id
+     * @param nom
+     * @param cognom
+     * @param hores_vol
+     * @param id_aeroport 
+     */
     public Pilot(Integer id, String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
         this.id = id;
         this.nom = nom;
@@ -54,6 +65,13 @@ public class Pilot implements Serializable {
         this.models = new HashSet<ModelAvio>();
     }
     
+    /**
+     * Constructor sense id, es genera automaticament.
+     * @param nom
+     * @param cognom
+     * @param hores_vol
+     * @param id_aeroport 
+     */
     public Pilot(String nom, String cognom, Integer hores_vol, Aeroport id_aeroport) {
         this.nom = nom;
         this.cognom = cognom;
