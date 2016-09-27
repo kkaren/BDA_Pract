@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 
 import org.hibernate.Hibernate;
@@ -41,14 +42,15 @@ public class TestHB {
             
                 // Display menu graphics
                 System.out.println("============================");
-                System.out.println("|   MENU SELECTION DEMO    |");
+                System.out.println("|     VOLA UB - Aerolinia  |");
                 System.out.println("============================");
                 System.out.println("| Options:                 |");
-                System.out.println("|        1. Consultar      |");
-                System.out.println("|        2. Afegir         |");
-                System.out.println("|        3. Borrar         |");
-                System.out.println("|        4. Modificar      |");
-                System.out.println("|        5. Sortir         |");
+                System.out.println("|      1. Consultar        |");
+                System.out.println("|      2. Afegir           |");
+                System.out.println("|      3. Borrar           |");
+                System.out.println("|      4. Modificar        |");
+                System.out.println("|      5. Programar Ruta   |");
+                System.out.println("|      6. Sortir           |");
                 System.out.println("============================");
                 swValue = Keyin.inInt(" Select option: ");
 
@@ -71,6 +73,10 @@ public class TestHB {
                   menu_modificar(session);
                   break;
                 case 5:
+                  System.out.println("Option 5 selected");
+                  programarRuta(session);
+                  break;
+                case 6:
                   System.out.println("Exit selected");
                   acabar=TRUE;
                   break;
@@ -290,7 +296,7 @@ public class TestHB {
             Query q = session.createQuery("from Aeroport");
             listado = q.list();
 
-            System.out.println("Id | Codi_int |  Nom                    | Ciutat     | Cost_handling ");
+            System.out.println("Id | Codi_int | Nom       | Ciutat    | Cost_handling ");
             System.out.println("--------------------------------------------------------------------");
             for (Aeroport aero : listado) {
                 System.out.println(aero.getId() + " | " + aero.getCodi_int() + "       | " 
@@ -304,7 +310,7 @@ public class TestHB {
             Query q = session.createQuery("from ModelAvio");
             listado = q.list();
 
-            System.out.println("Id | Nom |  Descripcio | Places | Pes ");
+            System.out.println("Id | Nom    |  Descripcio | Places | Pes ");
             System.out.println("--------------------------------------");
             for (ModelAvio model : listado) {
                 System.out.println(model.getId() + " | " + model.getNom() + " | " 
@@ -319,7 +325,7 @@ public class TestHB {
             Query q = session.createQuery("from Avio");
             listado = q.list();
 
-            System.out.println("Id | Matricula |  Model ");
+            System.out.println("Id | Matricula | Model ");
             System.out.println("-------------------------");
             for (Avio avio : listado) {
                 System.out.println(avio.getId() + " | " + avio.getMatricula() + " | " 
@@ -348,12 +354,18 @@ public class TestHB {
             Query q = session.createQuery("from Ruta");
             listado = q.list();
 
-            System.out.println("Id | Dia | Hora | Origen | Desti | Incidencies | Pilot");
+            System.out.println(" Id | Dia     | Hora     | Origen | Desti | Model Avio ");
             System.out.println("-------------------------------------------");
             for (Ruta ruta : listado) {
                 System.out.println(ruta.getId() + " | " + ruta.getDia()+ " | " 
                         + ruta.getHora() + " | " + ruta.getAeroport_origen().getCodi_int()+ " | " 
-                        + ruta.getAeroport_desti().getCodi_int());
+                        + ruta.getAeroport_desti().getCodi_int() +  " | " + ruta.getModel_avio().getNom()
+                        + " | ");
+                if(ruta.getPilot() != null){
+                    System.out.println("| Data    | Avio  | Pilot       | Incidencies ");
+                    System.out.println(ruta.getData() + " | " + ruta.getAvio().getMatricula() + " | "
+                        + ruta.getPilot().getNom() + ruta.getPilot().getCognom() + " | " + ruta.getIncidencies());
+                }
             }
         }
         
@@ -370,32 +382,67 @@ public class TestHB {
                 System.out.println(i+"."+aero.getCodi_int());
                 i++;
             }
-            System.out.println("Aeroport Base: ");
+            System.out.println("Aeroport: ");
             int sel = sc.nextInt();
-            
-            Aeroport aero = listado.get(sel-1);
+           
             session.beginTransaction();
+            Aeroport aero = listado.get(sel-1);
+            
             session.delete(aero);
             session.getTransaction().commit();
             
-            System.out.println("---------- Aeroports ----------");
-            listado = new ArrayList<Aeroport>();
-            q = session.createQuery("from Aeroport");
-            listado = q.list();
-            i = 1;
-            
-            for (Aeroport aero1 : listado) {
-                System.out.println(i+"."+aero1.getCodi_int());
-                i++;
-            }
         }
 
         private static void deleteModelAvio(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("---------- Models Avio ----------");
+            Scanner sc = new Scanner(System.in);
+            List<ModelAvio> listado = new ArrayList<ModelAvio>();
+            Query q = session.createQuery("from ModelAvio");
+            listado = q.list();
+            int i = 1;
+            
+            for (ModelAvio model : listado) {
+                System.out.println(i+"."+model.getNom());
+                i++;
+            }
+            System.out.println("Model Avio: ");
+            int sel = sc.nextInt();
+            
+            session.beginTransaction();
+            ModelAvio model = listado.get(sel-1);
+            
+            List<Pilot> listado3 = new ArrayList<Pilot>();
+            Query q3 = session.createQuery("from Pilot");
+            listado3 = q3.list();
+            
+            for(Pilot pilot : listado3){
+                pilot.deleteModel(model);
+            }
+
+            session.delete(model);
+            session.getTransaction().commit();
+            
         }
 
         private static void deleteAvio(Session session) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("----------- Avions -----------");
+            Scanner sc = new Scanner(System.in);
+            List<Avio> listado = new ArrayList<Avio>();
+            Query q = session.createQuery("from Avio");
+            listado = q.list();
+            int i = 1;
+            
+            for (Avio avio : listado) {
+                System.out.println(i+"."+avio.getMatricula());
+                i++;
+            }
+            System.out.println("Avio: ");
+            int sel = sc.nextInt();
+            
+            session.beginTransaction();
+            Avio avio = listado.get(sel-1);
+            session.delete(avio);
+            session.getTransaction().commit();
         }
 
         private static void deletePilot(Session session) {
@@ -418,7 +465,7 @@ public class TestHB {
                 System.out.println(i+"."+aero.getCodi_int());
                 i++;
             }
-            System.out.println("Aeroport Base: ");
+            System.out.println("Aeroport: ");
             int sel = sc.nextInt();
             session.beginTransaction();
             Aeroport aero = (Aeroport) session.load(Aeroport.class,listado.get(sel-1).getId());
@@ -442,7 +489,7 @@ public class TestHB {
             listado = q.list();
             i = 1;           
             for (Aeroport aero1 : listado) {
-                System.out.println(i+"."+aero1.getCodi_int());
+                System.out.println(aero1);
                 i++;
             }
             
@@ -465,6 +512,9 @@ public class TestHB {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
+        private static void programarRuta(Session session){
+            
+        }
 
         private static void menu_consultar(Session session) {
         // Local variable
@@ -472,14 +522,14 @@ public class TestHB {
 
             // Display menu graphics
             System.out.println("============================");
-            System.out.println("|   MENU CONSULTAR         |");
+            System.out.println("|     MENU CONSULTAR       |");
             System.out.println("============================");
             System.out.println("| Options:                 |");
-            System.out.println("|        1. Aeroports      |");
-            System.out.println("|        2. Models d'avio  |");
-            System.out.println("|        3. Avions         |");
-            System.out.println("|        4. Pilots         |");
-            System.out.println("|        5. Rutes          |");
+            System.out.println("|      1. Aeroports        |");
+            System.out.println("|      2. Models d'avio    |");
+            System.out.println("|      3. Avions           |");
+            System.out.println("|      4. Pilots           |");
+            System.out.println("|      5. Rutes            |");
             System.out.println("============================");
             swValue = Keyin.inInt(" Select option: ");
 
@@ -519,14 +569,14 @@ public class TestHB {
 
             // Display menu graphics
             System.out.println("============================");
-            System.out.println("|   MENU AFEGIR            |");
+            System.out.println("|     MENU AFEGIR          |");
             System.out.println("============================");
             System.out.println("| Options:                 |");
-            System.out.println("|        1. Aeroports      |");
-            System.out.println("|        2. Models d'avio  |");
-            System.out.println("|        3. Avions         |");
-            System.out.println("|        4. Pilots         |");
-            System.out.println("|        5. Rutes          |");
+            System.out.println("|      1. Aeroports        |");
+            System.out.println("|      2. Models d'avio    |");
+            System.out.println("|      3. Avions           |");
+            System.out.println("|      4. Pilots           |");
+            System.out.println("|      5. Rutes            |");
             System.out.println("============================");
             swValue = Keyin.inInt(" Select option: ");
 
@@ -566,14 +616,14 @@ public class TestHB {
 
             // Display menu graphics
             System.out.println("============================");
-            System.out.println("|   MENU BORRAR            |");
+            System.out.println("|     MENU BORRAR          |");
             System.out.println("============================");
             System.out.println("| Options:                 |");
-            System.out.println("|        1. Aeroports      |");
-            System.out.println("|        2. Models d'avio  |");
-            System.out.println("|        3. Avions         |");
-            System.out.println("|        4. Pilots         |");
-            System.out.println("|        5. Rutes          |");
+            System.out.println("|      1. Aeroports        |");
+            System.out.println("|      2. Models d'avio    |");
+            System.out.println("|      3. Avions           |");
+            System.out.println("|      4. Pilots           |");
+            System.out.println("|      5. Rutes            |");
             System.out.println("============================");
             swValue = Keyin.inInt(" Select option: ");
 
@@ -612,14 +662,14 @@ public class TestHB {
 
             // Display menu graphics
             System.out.println("============================");
-            System.out.println("|   MENU EDITAR             |");
+            System.out.println("|     MENU EDITAR          |");
             System.out.println("============================");
             System.out.println("| Options:                 |");
-            System.out.println("|        1. Aeroports      |");
-            System.out.println("|        2. Models d'avio  |");
-            System.out.println("|        3. Avions         |");
-            System.out.println("|        4. Pilots         |");
-            System.out.println("|        5. Rutes          |");
+            System.out.println("|      1. Aeroports        |");
+            System.out.println("|      2. Models d'avio    |");
+            System.out.println("|      3. Avions           |");
+            System.out.println("|      4. Pilots           |");
+            System.out.println("|      5. Rutes            |");
             System.out.println("============================");
             swValue = Keyin.inInt(" Select option: ");
 

@@ -7,6 +7,8 @@ package practica1_bda;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -16,7 +18,7 @@ import javax.persistence.*;
 @Table(name="MODEL_AVIO")
 public class ModelAvio implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -36,6 +38,12 @@ public class ModelAvio implements Serializable {
     @JoinColumn(name="pilots")
     private Set<Pilot> pilots;
     
+    @OneToMany(mappedBy="modelAvio", cascade=CascadeType.REMOVE)
+    private Set<Avio> avions;
+    
+    @OneToMany(mappedBy="model_avio", cascade=CascadeType.REMOVE)
+    private Set<Ruta> rutes;
+     
     public ModelAvio() {
         super();
         // TODO Auto-generated constructor stub

@@ -5,7 +5,10 @@
  */
 package practica1_bda;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -24,6 +27,9 @@ public class Avio implements Serializable {
     @ManyToOne
     @JoinColumn(name="id_model")
     private ModelAvio modelAvio; // Relacio many-to-1
+    
+    @OneToMany(mappedBy = "avio", cascade=CascadeType.REMOVE)
+    private Set<Ruta> rutes;
     
     public Avio() {
         super();

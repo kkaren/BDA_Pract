@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -37,6 +39,9 @@ public class Pilot implements Serializable {
     @ManyToMany
     @JoinColumn(name="models")
     private Set<ModelAvio> models; // Relacio n-n
+    
+    @OneToMany(mappedBy = "pilot", cascade=CascadeType.REMOVE)
+    private Set<Ruta> rutes;
     
     public Pilot() {
         super();
@@ -109,9 +114,12 @@ public class Pilot implements Serializable {
     }
     
     public void addModel(ModelAvio a){
-        System.out.println("WTF");
         this.models.add(a);
     }
+    
+    public void deleteModel(ModelAvio a){
+        this.models.remove(a);
+    }    
     
     public Set<String> getModelsNames() {
         Set<String> noms = new HashSet<String>();

@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -128,11 +130,11 @@ public class Ruta implements Serializable {
         this.aeroport_desti = aeroport_desti;
     }
 
-    public ModelAvio getId_model() {
+    public ModelAvio getModel_avio() {
         return model_avio;
     }
 
-    public void setId_model(ModelAvio model_avio) {
+    public void setModel_avio(ModelAvio model_avio) {
         this.model_avio = model_avio;
     }
 
@@ -144,19 +146,19 @@ public class Ruta implements Serializable {
         this.data = data;
     }
 
-    public Avio getId_avio() {
+    public Avio getAvio() {
         return avio;
     }
 
-    public void setId_avio(Avio avio) {
+    public void setAvio(Avio avio) {
         this.avio = avio;
     }
 
-    public Pilot getId_pilot() {
+    public Pilot getPilot() {
         return pilot;
     }
 
-    public void setId_pilot(Pilot pilot) {
+    public void setPilot(Pilot pilot) {
         this.pilot = pilot;
     }
 
@@ -167,7 +169,7 @@ public class Ruta implements Serializable {
     public void setIncidencies(String incidencies) {
         this.incidencies = incidencies;
     }
-    
+
     @Override
     public String toString() {
         return "Ruta{" + "id=" + id + ",dia=" + dia + ", hora=" + hora + ", aeroport_origen=" 

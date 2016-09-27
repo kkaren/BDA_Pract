@@ -5,6 +5,7 @@
  */
 package practica1_bda;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 
 
@@ -32,6 +33,16 @@ public class Aeroport implements Serializable{
     @Column(name="cost_handling")
     private double cost_handling;
 
+    @OneToMany(mappedBy = "aeroport_origen", cascade=CascadeType.REMOVE)
+    private Set<Ruta> rutes_origen;
+    
+    @OneToMany(mappedBy="aeroport_desti", cascade=CascadeType.REMOVE)
+    private Set<Ruta> rutes_desti;
+
+    @OneToMany(mappedBy = "aeroport", cascade=CascadeType.REMOVE)
+    private Set<Pilot> pilots;
+
+    
     public Aeroport() {
         super();
         // TODO Auto-generated constructor stub
