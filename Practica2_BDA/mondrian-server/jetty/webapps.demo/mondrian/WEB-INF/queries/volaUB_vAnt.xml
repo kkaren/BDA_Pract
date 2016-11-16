@@ -1,0 +1,16 @@
+<Schema name="VolaUB">
+  <Cube name="reservations" visible="true" cache="true" enabled="true">
+    <Table name="reservations" schema="public">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" highCardinality="false" name="passengers">
+      <Hierarchy name="passengers" visible="true" hasAll="true" allMemberName="all">
+        <Table name="passengers" schema="public">
+        </Table>
+        <Level name="passengers" visible="true" table="passengers" column="id_passenger" nameColumn="desc_passenger" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="reservations" column="n_reservations" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
