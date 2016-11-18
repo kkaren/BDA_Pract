@@ -2,11 +2,13 @@
   <Cube name="Reservation" visible="true" cache="true" enabled="true">
     <Table name="reservation" schema="public">
     </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="id_agent" highCardinality="false" name="Booking_agent">
-      <Hierarchy name="Booking_agent" visible="true" hasAll="true" primaryKey="id_agent">
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_agent" highCardinality="false" name="Booking Agent">
+      <Hierarchy name="Booking Agent" visible="true" hasAll="true" primaryKey="id_agent">
         <Table name="booking_agent" schema="public">
         </Table>
-        <Level name="Booking_agent" visible="true" table="booking_agent" column="id_agent" nameColumn="agent_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        <Level name="Booking Agent" visible="true" table="booking_agent" column="id_agent" nameColumn="agent_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+          <Property name="Details" column="agent_details">
+          </Property>
         </Level>
       </Hierarchy>
     </Dimension>
@@ -15,12 +17,42 @@
         <Table name="passenger" schema="public">
         </Table>
         <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="first_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+          <Property name="Second name" column="second_name">
+          </Property>
+          <Property name="Last name" column="last_name">
+          </Property>
+          <Property name="Phone number" column="phone_number">
+          </Property>
+          <Property name="Email address" column="email_address">
+          </Property>
+          <Property name="City" column="city">
+          </Property>
+          <Property name="State" column="state_province_country">
+          </Property>
+          <Property name="Country" column="country">
+          </Property>
         </Level>
       </Hierarchy>
     </Dimension>
-    <Measure name="num_reservations" column="num_reservations" datatype="Integer" aggregator="sum" visible="true">
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_reservation_status" name="Status">
+      <Hierarchy name="Status" visible="true" hasAll="true">
+        <Table name="status" schema="public">
+        </Table>
+        <Level name="Status" visible="true" table="status" column="id_status" nameColumn="status_description" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_travel_class" name="Travel Class">
+      <Hierarchy name="Travel Class" visible="true" hasAll="true">
+        <Table name="travel_class" schema="public" alias="">
+        </Table>
+        <Level name="Travel Class" visible="true" table="travel_class" column="id_travel_class" nameColumn="travel_class_description" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Total reservations" column="id_reservation" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
-    <Measure name="num_passengers" column="num_passengers" datatype="Integer" aggregator="sum" visible="true">
+    <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
   </Cube>
 </Schema>

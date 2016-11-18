@@ -147,7 +147,6 @@ CREATE TABLE payment
   id_passenger integer NOT NULL,
   id_date_payment_made integer NOT NULL,
   payment_amount double precision NOT NULL,
-  total_payment_amount double precision NOT NULL,
   CONSTRAINT id_payment PRIMARY KEY (id_payment),
   CONSTRAINT id_passenger FOREIGN KEY (id_passenger)
       REFERENCES passenger (id_passenger) MATCH SIMPLE
@@ -192,8 +191,6 @@ CREATE TABLE reservation
   id_date_reserv_made integer NOT NULL,
   id_geography_passenger integer NOT NULL,
   number_in_party integer NOT NULL,
-  num_reservations integer,
-  num_passengers integer,
   CONSTRAINT id_reservation PRIMARY KEY (id_reservation),
   CONSTRAINT id_agent FOREIGN KEY (id_agent)
       REFERENCES booking_agent (id_agent) MATCH SIMPLE
