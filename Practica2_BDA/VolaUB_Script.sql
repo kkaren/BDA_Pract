@@ -12,7 +12,8 @@ CREATE TABLE date_dimension
     "Calendar Year" integer,
     "Fiscal Year Month" text,
     "Holiday Indicator" text,
-    "Weekday Indicator" text
+    "Weekday Indicator" text,
+    constraint "Date Key" PRIMARY KEY("Date Key")
 );
 -- Table: airport
 

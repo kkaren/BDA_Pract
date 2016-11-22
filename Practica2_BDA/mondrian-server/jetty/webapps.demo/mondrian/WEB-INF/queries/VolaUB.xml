@@ -50,19 +50,27 @@
         </Level>
       </Hierarchy>
     </Dimension>
+    <Dimension type="TimeDimension" visible="true" foreignKey="id_reservation" name="Date">
+      <Hierarchy name="Date" visible="true" hasAll="true">
+        <Table name="date_dimension" schema="public" alias="">
+        </Table>
+        <Level name="Date" visible="true" table="date_dimension" column="Date Key" nameColumn="Date" type="Date" uniqueMembers="true" levelType="TimeDays">
+        </Level>
+      </Hierarchy>
+    </Dimension>
     <Measure name="Total reservations" column="id_reservation" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
     <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
   </Cube>
   <Cube name="Payment" visible="true" cache="true" enabled="true">
-    <Table name="payment" schema="public" alias="">
+    <Table name="payment" schema="public">
     </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" name="Passenger">
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" highCardinality="false" name="Passenger">
       <Hierarchy name="Passenger" visible="true" hasAll="true">
-        <Table name="passenger" schema="public" alias="">
+        <Table name="passenger" schema="public">
         </Table>
-        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="first_name" type="String" uniqueMembers="false">
+        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="first_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
           <Property name="Second name" column="second_name" type="String">
           </Property>
           <Property name="Last name" column="last_name" type="String">
@@ -75,7 +83,7 @@
           </Property>
           <Property name="State" column="state_province_country" type="String">
           </Property>
-          <Property name="Country" column="country">
+          <Property name="Country" column="country" type="String">
           </Property>
         </Level>
       </Hierarchy>
