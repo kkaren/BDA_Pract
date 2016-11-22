@@ -204,6 +204,9 @@ CREATE TABLE reservation
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_travel_class FOREIGN KEY (id_travel_class)
       REFERENCES travel_class (id_travel_class) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_date_reserv_made FOREIGN KEY (id_date_reserv_made)
+      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
