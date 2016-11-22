@@ -50,11 +50,13 @@
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="TimeDimension" visible="true" foreignKey="id_reservation" name="Date">
-      <Hierarchy name="Date" visible="true" hasAll="true">
+    <Dimension type="TimeDimension" visible="true" foreignKey="id_date_reserv_made" name="Time">
+      <Hierarchy name="Time" visible="true" hasAll="true">
         <Table name="date_dimension" schema="public" alias="">
         </Table>
-        <Level name="Date" visible="true" table="date_dimension" column="Date Key" nameColumn="Date" type="Date" uniqueMembers="true" levelType="TimeDays">
+        <Level name="Year" visible="true" table="date_dimension" column="Calendar Year" nameColumn="Calendar Year" type="Numeric" uniqueMembers="true" levelType="TimeYears">
+        </Level>
+        <Level name="Month" visible="true" table="date_dimension" column="Calendar Month" nameColumn="Calendar Month" type="String" uniqueMembers="false" levelType="TimeMonths">
         </Level>
       </Hierarchy>
     </Dimension>
