@@ -1,4 +1,25 @@
-﻿INSERT INTO passenger(
+INSERT INTO date_dimension
+    ("Date", "Full Day Description", "Day Of Week", "Calendar Month",
+    "Calendar Year", "Fiscal Year Month", "Holiday Indicator",
+    "Weekday Indicator")
+SELECT
+    day,
+    rtrim(to_char(day, 'Month')) || to_char(day, ' DD, YYYY'),
+    to_char(day, 'Day'),
+    rtrim(to_char(day, 'Month')),
+    date_part('year', day),
+    'F' || to_char(day, 'YYYY-MM'),
+    '', --omitting (trivial 'Holiday'/'Non-Holiday, but how to get this ??),
+    CASE
+        WHEN date_part('isodow', day) IN (6, 7) THEN 'Weekend'
+        ELSE 'Weekday'
+    END
+FROM
+    generate_series('2015-01-01'::date, '2025-12-31'::date, '1 day') day;
+
+
+
+INSERT INTO passenger(
 id_passenger, first_name, second_name, last_name, phone_number, email_address, id_geography, city, state_province_country, country, other_passenger_details)
  VALUES (1, 'Lucy', 'Marie', 'Jones', 555001245, 'lucymarie@gmail.com', 1, 'Dallas', 'Texas', 'EEUU', '');
 

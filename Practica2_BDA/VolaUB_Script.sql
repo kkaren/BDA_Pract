@@ -2,18 +2,18 @@
 
 -- DROP TABLE date CASCADE;
 
-CREATE TABLE date
+CREATE TABLE date_dimension
 (
-  id_date integer NOT NULL,
-  day integer NOT NULL,
-  month integer NOT NULL,
-  year integer NOT NULL,
-  CONSTRAINT id_date PRIMARY KEY (id_date)
-)
-WITH (
-  OIDS=FALSE
+    "Date Key" serial,
+    "Date" date,
+    "Full Day Description" text,
+    "Day Of Week" text,
+    "Calendar Month" text,
+    "Calendar Year" integer,
+    "Fiscal Year Month" text,
+    "Holiday Indicator" text,
+    "Weekday Indicator" text
 );
-
 -- Table: airport
 
 -- DROP TABLE airport CASCADE;
