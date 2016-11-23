@@ -1,19 +1,16 @@
 ﻿-- Table: date
 
-DROP TABLE date CASCADE;
+DROP TABLE date_dimension CASCADE;
 
 CREATE TABLE date_dimension
 (
-    "Date Key" serial,
-    "Date" date,
-    "Full Day Description" text,
-    "Day Of Week" text,
-    "Calendar Month" text,
-    "Calendar Year" integer,
-    "Fiscal Year Month" text,
-    "Holiday Indicator" text,
-    "Weekday Indicator" text,
-    constraint "Date Key" PRIMARY KEY("Date Key")
+    id_date serial,
+    full_date date,
+    date_description text,
+    weekday text,
+    month integer,
+    year integer,
+    constraint id_date PRIMARY KEY(id_date)
 );
 -- Table: airport
 
@@ -21,9 +18,9 @@ DROP TABLE airport CASCADE;
 
 CREATE TABLE airport
 (
-  id_airport integer NOT NULL,
+  id_airport serial,
   airport_name character varying(15) NOT NULL,
-  id_location integer NOT NULL,
+  airport_location integer NOT NULL,
   other_airport_details character varying(100),
   CONSTRAINT id_airport PRIMARY KEY (id_airport)
 )
@@ -37,7 +34,7 @@ DROP TABLE flight CASCADE;
 
 CREATE TABLE flight
 (
-  id_flight integer NOT NULL,
+  id_flight serial,
   id_origin_airport integer NOT NULL,
   id_destination_airport integer NOT NULL,
   id_departure_date_time integer NOT NULL,
@@ -51,10 +48,10 @@ CREATE TABLE flight
       REFERENCES airport (id_airport) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_departure_date_time FOREIGN KEY (id_departure_date_time)
-      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
+      REFERENCES date_dimension (id_date) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_arrival_date_time FOREIGN KEY (id_arrival_date_time)
-      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
+      REFERENCES date_dimension (id_date) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -103,7 +100,7 @@ DROP TABLE geography CASCADE;
 
 CREATE TABLE geography
 (
-  id_geography integer NOT NULL,
+  id_geography serial,
   state character varying(40) NOT NULL,
   country character varying(40) NOT NULL,
   CONSTRAINT id_geography PRIMARY KEY (id_geography)
@@ -118,7 +115,7 @@ DROP TABLE booking_agent CASCADE;
 
 CREATE TABLE booking_agent
 (
-  id_agent integer NOT NULL,
+  id_agent serial,
   agent_name character varying(40) NOT NULL,
   agent_details character varying(100),
   CONSTRAINT id_agent PRIMARY KEY (id_agent)
@@ -133,7 +130,7 @@ DROP TABLE passenger CASCADE;
 
 CREATE TABLE passenger
 (
-  id_passenger integer NOT NULL,
+  id_passenger serial,
   passenger_name character varying(40) NOT NULL,
   phone_number integer NOT NULL,
   email_address character varying(40) NOT NULL,
@@ -151,7 +148,7 @@ DROP TABLE status CASCADE;
 
 CREATE TABLE status
 (
-  id_status integer NOT NULL,
+  id_status INTEGER NOT NULL,
   status_description character varying(15) NOT NULL,
   CONSTRAINT id_status PRIMARY KEY (id_status)
 )
@@ -165,7 +162,7 @@ DROP TABLE travel_class CASCADE;
 
 CREATE TABLE travel_class
 (
-  id_travel_class integer NOT NULL,
+  id_travel_class INTEGER NOT NULL,
   travel_class_description character varying(20) NOT NULL,
   CONSTRAINT id_travel_class PRIMARY KEY (id_travel_class)
 )
@@ -180,7 +177,7 @@ DROP TABLE reservation CASCADE;
 
 CREATE TABLE reservation
 (
-  id_reservation integer NOT NULL,
+  id_reservation serial,
   id_agent integer NOT NULL,
   id_passenger integer NOT NULL,
   id_origin_airport integer NOT NULL,
@@ -214,7 +211,7 @@ CREATE TABLE reservation
       REFERENCES travel_class (id_travel_class) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_date_reserv_made FOREIGN KEY (id_date_reserv_made)
-      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
+      REFERENCES date_dimension (id_date) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (

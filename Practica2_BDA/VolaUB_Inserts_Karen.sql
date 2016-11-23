@@ -18,9 +18,9 @@ FROM
     generate_series('2015-01-01'::date, '2025-12-31'::date, '1 day') day;
 
 
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (1, BCN, 'Barcelona, Spain', '');
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (2, LAX, 'Los Angeles, EEUU', '');
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (3, FCO, 'Roma, Italia', '');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (1, BCN, 3, 'Barcelona, Spain');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (2, LAX, 2, 'Los Angeles, EEUU');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (3, FCO, 1, 'Roma, Italia');
 
 INSERT INTO passenger(id_passenger, passenger_name, phone_number, email_address, id_geography, other_passenger_details)
  VALUES (1, 'Lucy Marie Jones', 555001245, 'lucymarie@gmail.com', 1, '');
