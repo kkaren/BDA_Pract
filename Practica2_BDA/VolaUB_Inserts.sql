@@ -5,6 +5,7 @@ SELECT
     rtrim(to_char(day, 'Month')) || to_char(day, ' DD, YYYY'),
     to_char(day, 'Day'),
     date_part('month', day),
+    rtrim(to_char(day, 'Month')),
     date_part('year', day)
 
 FROM
