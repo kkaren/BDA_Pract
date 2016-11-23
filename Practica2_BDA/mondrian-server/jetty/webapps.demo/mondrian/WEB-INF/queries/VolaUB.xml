@@ -32,6 +32,8 @@
           <Property name="Country" column="country" type="String">
           </Property>
         </Level>
+        <Level name="New Level 1" visible="true" column="id_geography" nameColumn="state_province_country" uniqueMembers="false">
+        </Level>
       </Hierarchy>
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="id_reservation_status" highCardinality="false" name="Status">
@@ -50,13 +52,13 @@
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="TimeDimension" visible="true" foreignKey="id_date_reserv_made" name="Time">
-      <Hierarchy name="Time" visible="true" hasAll="true">
-        <Table name="date_dimension" schema="public" alias="">
+    <Dimension type="TimeDimension" visible="true" foreignKey="id_date_reserv_made" highCardinality="false" name="Time">
+      <Hierarchy name="Time" visible="true" hasAll="true" primaryKey="Date Key">
+        <Table name="date_dimension" schema="public">
         </Table>
-        <Level name="Year" visible="true" table="date_dimension" column="Calendar Year" nameColumn="Calendar Year" type="Numeric" uniqueMembers="true" levelType="TimeYears">
+        <Level name="Year" visible="true" table="date_dimension" column="Calendar Year" nameColumn="Calendar Year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
         </Level>
-        <Level name="Month" visible="true" table="date_dimension" column="Calendar Month" nameColumn="Calendar Month" type="String" uniqueMembers="false" levelType="TimeMonths">
+        <Level name="Month" visible="true" table="date_dimension" column="Calendar Month" nameColumn="Calendar Month" type="Numeric" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
@@ -92,5 +94,9 @@
     </Dimension>
     <Measure name="Total payment amount" column="payment_amount" aggregator="sum" visible="true">
     </Measure>
+  </Cube>
+  <Cube name="Flight" visible="true" cache="true" enabled="true">
+    <Table name="flight" schema="public" alias="">
+    </Table>
   </Cube>
 </Schema>
