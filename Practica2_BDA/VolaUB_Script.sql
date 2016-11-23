@@ -9,6 +9,7 @@ CREATE TABLE date_dimension
     date_description text,
     weekday text,
     month integer,
+    month_name text,
     year integer,
     constraint id_date PRIMARY KEY(id_date)
 );
@@ -20,7 +21,7 @@ CREATE TABLE airport
 (
   id_airport serial,
   airport_name character varying(15) NOT NULL,
-  airport_location integer NOT NULL,
+  airport_location character varying(40) NOT NULL,
   other_airport_details character varying(100),
   CONSTRAINT id_airport PRIMARY KEY (id_airport)
 )
