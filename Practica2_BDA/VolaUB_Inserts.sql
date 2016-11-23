@@ -10,11 +10,16 @@ SELECT
 FROM
     generate_series('2015-01-01'::date, '2025-12-31'::date, '1 day') day;
 
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (1, 'BCN', 3, 'Barcelona, Spain');
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (2, 'LAX', 2, 'Los Angeles, EEUU');
-INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (3, 'FCO', 1, 'Roma, Italia');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (1, 'BCN', 'Barcelona, Spain', '');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (2, 'LAX', 'Los Angeles, EEUU', '');
+INSERT INTO airport(id_airport, airport_name, airport_location, other_airport_details) VALUES (3, 'FCO', 'Roma, Italia', '');
 
-
+INSERT INTO geography(id_geography, state, country) VALUES (1, 'Catalunya', 'Spain');
+INSERT INTO geography(id_geography, state, country) VALUES (2, 'London', 'UK');
+INSERT INTO geography(id_geography, state, country) VALUES (3, 'California', 'USA');
+INSERT INTO geography(id_geography, state, country) VALUES (4, 'Paris', 'France');
+INSERT INTO geography(id_geography, state, country) VALUES (5, 'Rome', 'Italy');
+INSERT INTO geography(id_geography, state, country) VALUES (6, 'Tokyo', 'Japan');
 
 INSERT INTO passenger(
  passenger_name, phone_number,email_address,id_geography,other_passenger_details)
@@ -43,21 +48,21 @@ INSERT INTO passenger(
 
 
 
-INSERT INTO booking_agent( agent_name, agent_details)
+INSERT INTO booking_agent(agent_name, agent_details)
 VALUES ('Samantha Bones', '2 years in the company'),
  ('Thomas Smith', '10 years in the company'),
  ('Spencer Grimes', '3.5 years in the company'),
  ('Harry Potter', 'First year'),
  ('Peter Griffin', '7.5 years in the company');
 
-INSERT INTO status(id_status, status_description) VALUES (1, 'Accepted');
-INSERT INTO status(id_status, status_description) VALUES (2, 'Cancelled');
+INSERT INTO status(id_status, status_description) VALUES (1, 'Made/Accepted');
+INSERT INTO status(id_status, status_description) VALUES (2, 'Not Made/Cancelled');
 
 INSERT INTO travel_class(id_travel_class, travel_class_description) VALUES (1, 'Tourist');
 INSERT INTO travel_class(id_travel_class, travel_class_description) VALUES (2, 'Business');
 INSERT INTO travel_class(id_travel_class, travel_class_description) VALUES (3, 'First class');
 
-INSERT INTO reservation( id_agent, id_passenger, id_reservation_status, id_travel_class, id_date_reserv_made, number_in_party, payment_amount, id_origin_airport,id_destination_airport, id_payment_status)
+INSERT INTO reservation(id_agent, id_passenger, id_reservation_status, id_travel_class, id_date_reserv_made, number_in_party, payment_amount, id_origin_airport,id_destination_airport, id_payment_status)
  VALUES ( 1, 1, 1, 2, 3, 1, 10, 1, 2, 1),
  ( 1, 1, 1, 2, 305, 1, 30, 1, 2, 2),
  ( 1, 2, 1, 1, 57, 2, 30, 2, 1, 1),
