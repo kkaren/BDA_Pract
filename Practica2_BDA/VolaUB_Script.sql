@@ -1,6 +1,6 @@
 ﻿-- Table: date
 
--- DROP TABLE date CASCADE;
+DROP TABLE date CASCADE;
 
 CREATE TABLE date_dimension
 (
@@ -17,7 +17,7 @@ CREATE TABLE date_dimension
 );
 -- Table: airport
 
--- DROP TABLE airport CASCADE;
+DROP TABLE airport CASCADE;
 
 CREATE TABLE airport
 (
@@ -33,7 +33,7 @@ WITH (
 
 -- Table: flight
 
--- DROP TABLE flight CASCADE;
+DROP TABLE flight CASCADE;
 
 CREATE TABLE flight
 (
@@ -49,21 +49,62 @@ CREATE TABLE flight
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_origin_airport FOREIGN KEY (id_origin_airport)
       REFERENCES airport (id_airport) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_departure_date_time FOREIGN KEY (id_departure_date_time)
+      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_arrival_date_time FOREIGN KEY (id_arrival_date_time)
+      REFERENCES date_dimension ("Date Key") MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
 
+-- Index: fki_id_origin_airport
+
+DROP INDEX fki_id_origin_airport;
+
+CREATE INDEX fki_id_origin_airport
+  ON flight
+  USING btree
+  (id_origin_airport);
+
+-- Index: fki_id_destination_airport
+
+DROP INDEX fki_id_destination_airport;
+
+CREATE INDEX fki_id_destination_airport
+  ON flight
+  USING btree
+  (id_destination_airport);
+
+-- Index: fki_id_departure_date_time
+
+DROP INDEX fki_id_departure_date_time;
+
+CREATE INDEX fki_id_departure_date_time
+  ON flight
+  USING btree
+  (id_departure_date_time);
+
+-- Index: fki_id_arrival_date_time
+
+DROP INDEX fki_id_arrival_date_time;
+
+CREATE INDEX fki_id_arrival_date_time
+  ON flight
+  USING btree
+  (id_arrival_date_time);
+
 -- Table: geography
 
--- DROP TABLE geography CASCADE;
+DROP TABLE geography CASCADE;
 
 CREATE TABLE geography
 (
   id_geography integer NOT NULL,
-  city character varying(40) NOT NULL,
-  state_province_country character varying(40) NOT NULL,
+  state character varying(40) NOT NULL,
   country character varying(40) NOT NULL,
   CONSTRAINT id_geography PRIMARY KEY (id_geography)
 )
@@ -73,7 +114,7 @@ WITH (
 
 -- Table: booking_agent
 
--- DROP TABLE booking_agent CASCADE;
+DROP TABLE booking_agent CASCADE;
 
 CREATE TABLE booking_agent
 (
@@ -88,20 +129,15 @@ WITH (
 
 -- Table: passenger
 
--- DROP TABLE passenger CASCADE;
+DROP TABLE passenger CASCADE;
 
 CREATE TABLE passenger
 (
   id_passenger integer NOT NULL,
-  first_name character varying(15) NOT NULL,
-  second_name character varying(15) NOT NULL,
-  last_name character varying(15) NOT NULL,
+  passenger_name character varying(40) NOT NULL,
   phone_number integer NOT NULL,
   email_address character varying(40) NOT NULL,
   id_geography integer NOT NULL,
-  city character varying(40) NOT NULL,
-  state_province_country character varying(40) NOT NULL,
-  country character varying(40) NOT NULL,
   other_passenger_details character varying(100),
   CONSTRAINT id_passenger PRIMARY KEY (id_passenger)
 )
@@ -111,7 +147,7 @@ WITH (
 
 -- Table: status
 
--- DROP TABLE status CASCADE;
+DROP TABLE status CASCADE;
 
 CREATE TABLE status
 (
@@ -125,7 +161,7 @@ WITH (
 
 -- Table: travel_class
 
--- DROP TABLE travel_class CASCADE;
+DROP TABLE travel_class CASCADE;
 
 CREATE TABLE travel_class
 (
@@ -137,61 +173,24 @@ WITH (
   OIDS=FALSE
 );
 
--- Table: payment
-
--- DROP TABLE payment CASCADE;
-
-CREATE TABLE payment
-(
-  id_payment integer NOT NULL,
-  id_payment_status integer NOT NULL,
-  id_passenger integer NOT NULL,
-  id_date_payment_made integer NOT NULL,
-  payment_amount double precision NOT NULL,
-  CONSTRAINT id_payment PRIMARY KEY (id_payment),
-  CONSTRAINT id_passenger FOREIGN KEY (id_passenger)
-      REFERENCES passenger (id_passenger) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT id_payment_status FOREIGN KEY (id_payment_status)
-      REFERENCES status (id_status) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-
--- Index: fki_id_passenger
-
--- DROP INDEX fki_id_passenger;
-
-CREATE INDEX fki_id_passenger
-  ON payment
-  USING btree
-  (id_passenger);
-
--- Index: fki_id_payment_status
-
--- DROP INDEX fki_id_payment_status;
-
-CREATE INDEX fki_id_payment_status
-  ON payment
-  USING btree
-  (id_payment_status);
 
 -- Table: reservation
 
--- DROP TABLE reservation CASCADE;
+DROP TABLE reservation CASCADE;
 
 CREATE TABLE reservation
 (
   id_reservation integer NOT NULL,
   id_agent integer NOT NULL,
   id_passenger integer NOT NULL,
+  id_origin_airport integer NOT NULL,
+  id_destination_airport integer NOT NULL,
   id_reservation_status integer NOT NULL,
+  id_payment_status integer NOT NULL,
   id_travel_class integer NOT NULL,
   id_date_reserv_made integer NOT NULL,
-  id_geography_passenger integer NOT NULL,
   number_in_party integer NOT NULL,
+  payment_amount double precision NOT NULL,
   CONSTRAINT id_reservation PRIMARY KEY (id_reservation),
   CONSTRAINT id_agent FOREIGN KEY (id_agent)
       REFERENCES booking_agent (id_agent) MATCH SIMPLE
@@ -199,7 +198,16 @@ CREATE TABLE reservation
   CONSTRAINT id_passenger FOREIGN KEY (id_passenger)
       REFERENCES passenger (id_passenger) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_origin_airport FOREIGN KEY (id_origin_airport)
+      REFERENCES airport (id_airport) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_destination_airport FOREIGN KEY (id_destination_airport)
+      REFERENCES airport (id_airport) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_reservation_status FOREIGN KEY (id_reservation_status)
+      REFERENCES status (id_status) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT id_payment_status FOREIGN KEY  (id_payment_status)
       REFERENCES status (id_status) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_travel_class FOREIGN KEY (id_travel_class)
@@ -215,7 +223,7 @@ WITH (
 
 -- Index: fki_id_agent
 
--- DROP INDEX fki_id_agent;
+DROP INDEX fki_id_agent;
 
 CREATE INDEX fki_id_agent
   ON reservation
@@ -224,27 +232,63 @@ CREATE INDEX fki_id_agent
 
 -- Index: fki_id_passenger
 
--- DROP INDEX fki_id_passenger;
+DROP INDEX fki_id_passenger;
 
 CREATE INDEX fki_id_passenger
   ON reservation
   USING btree
   (id_passenger);
 
+-- Index: fki_id_origin_airport
+
+DROP INDEX fki_id_origin_airport;
+
+CREATE INDEX fki_id_origin_airport
+  ON reservation
+  USING btree
+  (id_origin_airport);
+
+-- Index: fki_id_destination_airport
+
+DROP INDEX fki_id_destination_airport;
+
+CREATE INDEX fki_id_destination_airport
+  ON reservation
+  USING btree
+  (id_destination_airport);
+
 -- Index: fki_id_reservation_status
 
--- DROP INDEX fki_id_reservation_status;
+DROP INDEX fki_id_reservation_status;
 
 CREATE INDEX fki_id_reservation_status
   ON reservation
   USING btree
   (id_reservation_status);
 
+-- Index: fki_id_payment_status
+
+DROP INDEX fki_id_payment_status;
+
+CREATE INDEX fki_id_payment_status
+  ON reservation
+  USING btree
+  (id_payment_status);
+
 -- Index: fki_id_travel_class
 
--- DROP INDEX fki_id_travel_class;
+DROP INDEX fki_id_travel_class;
 
 CREATE INDEX fki_id_travel_class
   ON reservation
   USING btree
   (id_travel_class);
+
+-- Index: fki_id_date_reserv_made
+
+DROP INDEX fki_id_date_reserv_made;
+
+CREATE INDEX fki_id_date_reserv_made
+  ON reservation
+  USING btree
+  (id_date_reserv_made);
