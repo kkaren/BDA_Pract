@@ -14,15 +14,9 @@
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" highCardinality="false" name="Passenger">
       <Hierarchy name="Passenger" visible="true" hasAll="true">
-        <Table name="passenger" schema="public">
+        <Table name="passenger" schema="public" alias="">
         </Table>
-        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="passenger_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
-          <Property name="Phone number" column="phone_number" type="String">
-          </Property>
-          <Property name="Email address" column="email_address" type="String">
-          </Property>
-        </Level>
-        <Level name="New Level 1" visible="true" column="id_geography" nameColumn="id_geography" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="passenger_name" uniqueMembers="false" levelType="Regular">
         </Level>
       </Hierarchy>
     </Dimension>
@@ -48,7 +42,7 @@
         </Table>
         <Level name="Year" visible="true" table="date_dimension" column="year" nameColumn="year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
         </Level>
-        <Level name="Month" visible="true" table="date_dimension" column="month" nameColumn="month" type="Numeric" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        <Level name="Month" visible="true" table="date_dimension" column="month" nameColumn="month_name" type="Numeric" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
@@ -56,22 +50,6 @@
     </Measure>
     <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
-  </Cube>
-  <Cube name="Payment" visible="true" cache="true" enabled="true">
-    <Table name="payment" schema="public">
-    </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" highCardinality="false" name="Passenger">
-      <Hierarchy name="Passenger" visible="true" hasAll="true">
-        <Table name="passenger" schema="public">
-        </Table>
-        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="passenger_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
-          <Property name="Phone number" column="phone_number" type="Integer">
-          </Property>
-          <Property name="Email address" column="email_address" type="String">
-          </Property>
-        </Level>
-      </Hierarchy>
-    </Dimension>
     <Measure name="Total payment amount" column="payment_amount" aggregator="sum" visible="true">
     </Measure>
   </Cube>

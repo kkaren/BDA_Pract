@@ -150,7 +150,7 @@ DROP TABLE status CASCADE;
 CREATE TABLE status
 (
   id_status INTEGER NOT NULL,
-  status_description character varying(15) NOT NULL,
+  status_description character varying(40) NOT NULL,
   CONSTRAINT id_status PRIMARY KEY (id_status)
 )
 WITH (
