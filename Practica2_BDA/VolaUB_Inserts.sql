@@ -21,30 +21,29 @@ INSERT INTO geography(state, country) VALUES ('Catalunya', 'Spain'),
 	('London', 'UK'), ('California', 'USA'), ('Paris', 'France'),
 	('Rome', 'Italy'), ('Tokyo', 'Japan');
 
-INSERT INTO passenger(
- passenger_name, phone_number,email_address,id_geography,other_passenger_details)
- VALUES ('John Smith', 555001245, 'lucymarie@gmail.com', 1, 'alergic to nuts'),
- ('Mari Madalenas', 505051234, 'magdalenasmari@outlook.com',1,' '),
- ('Adolfo Cabrales', 575757579, 'marabao@outlook.com',2, ' '),
- ('Roberto Iniesta', 98675431, 'deltouya@gamail.com',4,''),
- ('Andrea Motis', 12375431, 'feelinggood@gmail.com',3,''),
- ('Janis Joplin', 55555579, 'summertime@gmail.com',1,''),
- ('Amy Winehouse', 543555789, 'rehabisnotbad@gmail.com',5,''),
- ('Aretha Franklin', 555534789, 'respect@gmail.com',5,''),
- ('David Bowie', 54321245, 'majortom@nasa.org',1,'Far above the moon'),
- ('Leonard Cohen', 64312345, 'lehonard@gmail.com',1,''),
- ('Bob Dylan', 64312245, 'ihaveanobel@gmail.com',3,''),
- ('Adele Lastname', 612342345, 'lettheskyfall@gmail.com',3,''),
- ('Roger Waters', 613242354, 'thewall@gmail.com',2,''),
- ('John Lennon', 61328354, 'imagine@gmail.com',2,''),
- ('Freddie Mercury', 6884354, 'bohemian@gmail.com',2,'He wants to break free'),
- ('Joaquin Sabina', 63384354, '19dias@gmail.com',5,''),
- ('Eleanor Rigby', 63384312, 'lonleypeople@gmail.com',5,''),
- ('Jim Morrison', 66684312, 'jimmypuertas@gmail.com',4,''),
- ('Jimmy Hendrix', 69984312, 'purplehaze@gmail.com',6,''),
- ('Frank Zappa', 612344312, 'smokeonthewater@gmail.com',6,''),
- ('Bobby Brown', 612344312, 'illberealrich@gmail.com',6,''),
- ('Jude Hey', 612344312, 'hey_jude@gmail.com',6,'');
+INSERT INTO passenger(passenger_name, phone_number,email_address,id_geography, country, other_passenger_details)
+ VALUES ('John Smith', 555001245, 'lucymarie@gmail.com', 1, 'EEUU', 'Allergic to nuts'),
+ ('Mari Madalenas', 505051234, 'magdalenasmari@outlook.com', 2, 'Spain', ''),
+ ('Adolfo Cabrales', 575757579, 'marabao@outlook.com', 2, 'Spain',' '),
+ ('Roberto Iniesta', 98675431, 'deltouya@gamail.com', 4, 'Argentina',''),
+ ('Andrea Motis', 12375431, 'feelinggood@gmail.com', 3, 'Mexico',''),
+ ('Janis Joplin', 55555579, 'summertime@gmail.com', 1, 'EEUU',''),
+ ('Amy Winehouse', 543555789, 'rehabisnotbad@gmail.com', 5, 'UK',''),
+ ('Aretha Franklin', 555534789, 'respect@gmail.com', 5, 'UK',''),
+ ('David Bowie', 54321245, 'majortom@nasa.org', 1, 'EEUU','Far above the moon'),
+ ('Leonard Cohen', 64312345, 'lehonard@gmail.com', 1, 'EEUU',''),
+ ('Bob Dylan', 64312245, 'ihaveanobel@gmail.com', 3, 'Australia',''),
+ ('Adele Lastname', 612342345, 'lettheskyfall@gmail.com', 3, 'Australia',''),
+ ('Roger Waters', 613242354, 'thewall@gmail.com', 5, 'UK',''),
+ ('John Lennon', 61328354, 'imagine@gmail.com', 5, 'UK',''),
+ ('Freddie Mercury', 6884354, 'bohemian@gmail.com', 1, 'EEUU','He wants to break free'),
+ ('Joaquin Sabina', 63384354, '19dias@gmail.com', 2, 'Spain',''),
+ ('Eleanor Rigby', 63384312, 'lonleypeople@gmail.com', 4, 'Argentina',''),
+ ('Jim Morrison', 66684312, 'jimmypuertas@gmail.com', 1, 'EEUU',''),
+ ('Jimmy Hendrix', 69984312, 'purplehaze@gmail.com', 3, 'Australia',''),
+ ('Frank Zappa', 612344312, 'smokeonthewater@gmail.com', 6, 'Netherlands',''),
+ ('Bobby Brown', 612344312, 'illberealrich@gmail.com', 6, 'Netherlands',''),
+ ('Jude Hey', 612344312, 'hey_jude@gmail.com', 6, 'Netherlands','');
 
 
 INSERT INTO booking_agent(agent_name, agent_details)

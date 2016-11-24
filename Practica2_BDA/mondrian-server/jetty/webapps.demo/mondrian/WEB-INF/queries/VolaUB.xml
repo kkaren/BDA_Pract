@@ -14,9 +14,17 @@
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="id_passenger" highCardinality="false" name="Passenger">
       <Hierarchy name="Passenger" visible="true" hasAll="true">
-        <Table name="passenger" schema="public" alias="">
+        <Table name="passenger" schema="public">
         </Table>
-        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="passenger_name" uniqueMembers="false" levelType="Regular">
+        <Level name="Geography" visible="true" table="passenger" column="id_geography" nameColumn="country" type="String" uniqueMembers="true" levelType="Regular">
+        </Level>
+        <Level name="Passenger" visible="true" table="passenger" column="id_passenger" nameColumn="passenger_name" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+          <Property name="Phone number" column="phone_number">
+          </Property>
+          <Property name="Email address" column="email_address">
+          </Property>
+          <Property name="Other details" column="other_passenger_details">
+          </Property>
         </Level>
       </Hierarchy>
     </Dimension>
@@ -36,13 +44,41 @@
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="TimeDimension" visible="true" foreignKey="id_date_reserv_made" highCardinality="false" name="Time">
-      <Hierarchy name="Time" visible="true" hasAll="true" primaryKey="id_date">
+    <Dimension type="TimeDimension" visible="true" foreignKey="id_date_reserv_made" highCardinality="false" name="Made date">
+      <Hierarchy name="Made date" visible="true" hasAll="true" primaryKey="id_date">
         <Table name="date_dimension" schema="public">
         </Table>
         <Level name="Year" visible="true" table="date_dimension" column="year" nameColumn="year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
         </Level>
         <Level name="Month" visible="true" table="date_dimension" column="month" nameColumn="month_name" type="Numeric" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="Day" visible="true" table="date_dimension" column="day" nameColumn="day" type="Numeric" uniqueMembers="false" levelType="TimeDays">
+          <Property name="Full date" column="date_description">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_destination_airport" name="Airport Destination">
+      <Hierarchy name="Airport Destination" visible="true" hasAll="true">
+        <Table name="airport" schema="public" alias="">
+        </Table>
+        <Level name="Airport Destination" visible="true" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+          <Property name="Location" column="airport_location">
+          </Property>
+          <Property name="Other details" column="other_airport_details">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_origin_airport" name="Airport Origin">
+      <Hierarchy name="Airport Origin" visible="true" hasAll="true">
+        <Table name="airport" schema="public" alias="">
+        </Table>
+        <Level name="Airport Origin" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+          <Property name="Location" column="airport_location">
+          </Property>
+          <Property name="Other details" column="other_airport_details">
+          </Property>
         </Level>
       </Hierarchy>
     </Dimension>
@@ -51,6 +87,50 @@
     <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
     <Measure name="Total payment amount" column="payment_amount" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Flight" visible="true" cache="true" enabled="true">
+    <Table name="flight" schema="public" alias="">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_origin_airport" name="Airport Origin">
+      <Hierarchy name="Airport Origin" visible="true" hasAll="true">
+        <Table name="airport" schema="public" alias="">
+        </Table>
+        <Level name="Airport Origin" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+          <Property name="Location" column="airport_location">
+          </Property>
+          <Property name="Other details" column="other_airport_details">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="id_destination_airport" name="Airport Destination">
+      <Hierarchy name="Airport Destination" visible="true" hasAll="true">
+        <Table name="airport" schema="public" alias="">
+        </Table>
+        <Level name="Airport Destination" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+          <Property name="Location" column="airport_location">
+          </Property>
+          <Property name="Other details" column="other_airport_details">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" visible="true" foreignKey="id_departure_date_time" name="Departure date">
+      <Hierarchy name="Departure date" visible="true" hasAll="true" primaryKey="id_date">
+        <Table name="date_dimension" schema="public" alias="">
+        </Table>
+        <Level name="Year" visible="true" table="date_dimension" column="year" nameColumn="year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="Month" visible="true" table="date_dimension" column="month" nameColumn="month_name" type="Numeric" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="Day" visible="true" table="date_dimension" column="day" nameColumn="day" type="Numeric" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+          <Property name="Full date" column="date_description">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Total flight cost" column="flight_cost" aggregator="sum" visible="true">
     </Measure>
   </Cube>
 </Schema>
