@@ -1,6 +1,6 @@
 <Schema name="VolaUB">
   <Cube name="Reservation" visible="true" cache="true" enabled="true">
-    <Table name="reservation" schema="public">
+    <Table name="full_reservation" schema="public">
     </Table>
     <Dimension type="StandardDimension" visible="true" foreignKey="id_agent" highCardinality="false" name="Booking Agent">
       <Hierarchy name="Booking Agent" visible="true" hasAll="true" primaryKey="id_agent">
@@ -74,9 +74,19 @@
     </Dimension>
     <Measure name="Total reservations" column="id_reservation" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
-    <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct count" visible="true">
+    <Measure name="Total passengers" column="id_passenger" datatype="Integer" aggregator="distinct-count" visible="true">
     </Measure>
-    <Measure name="Total payment amount" column="payment_amount" aggregator="sum" visible="true">
+    <Measure name="Total payment amount" column="payment_amount" aggregator="distinct-count" visible="true">
     </Measure>
+    <Measure name="Total passengers in flight" column="number_in_party" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Total flight cost" column="flight_cost" aggregator="distinct count" visible="true">
+    </Measure>
+    <CalculatedMember name="Benefit" formatString="" formula=" [Measures].[Total payment amount]- [Reservation].[flight_cost]" dimension="Measures" visible="true">
+    </CalculatedMember>
   </Cube>
+  <VirtualCube enabled="true" name="Flight">
+    <VirtualCubeDimension name="New Virtual Dimension 0">
+    </VirtualCubeDimension>
+  </VirtualCube>
 </Schema>

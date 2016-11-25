@@ -127,6 +127,7 @@ CREATE TABLE reservation
   id_date_reserv_made integer NOT NULL,
   number_in_party integer NOT NULL,
   payment_amount double precision NOT NULL,
+  flight_cost double precision NOT NULL,
   CONSTRAINT id_reservation PRIMARY KEY (id_reservation),
   CONSTRAINT id_agent FOREIGN KEY (id_agent)
       REFERENCES booking_agent (id_agent) MATCH SIMPLE
@@ -302,3 +303,5 @@ INSERT INTO reservation(id_agent, id_passenger, id_reservation_status, id_travel
  ( 5, 20, 2, 1, 77, 2, 156, 1),
  ( 1, 21, 2, 1, 257, 3, 145, 3),
  ( 2, 22, 1, 3, 225, 4, 74, 1);
+
+CREATE TABLE full_reservation AS (SELECT reservation.*, flight.flight_cost FROM reservation INNER JOIN flight ON (reservation.id_flight = flight.id_flight)); 

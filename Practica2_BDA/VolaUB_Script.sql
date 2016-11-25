@@ -42,7 +42,6 @@ CREATE TABLE flight
   id_origin_airport integer NOT NULL,
   id_destination_airport integer NOT NULL,
   id_departure_date_time integer NOT NULL,
-  id_arrival_date_time integer NOT NULL,
   flight_cost double precision NOT NULL,
   CONSTRAINT id_flight PRIMARY KEY (id_flight),
   CONSTRAINT id_destination_airport FOREIGN KEY (id_destination_airport)
@@ -52,9 +51,6 @@ CREATE TABLE flight
       REFERENCES airport (id_airport) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT id_departure_date_time FOREIGN KEY (id_departure_date_time)
-      REFERENCES date_dimension (id_date) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT id_arrival_date_time FOREIGN KEY (id_arrival_date_time)
       REFERENCES date_dimension (id_date) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
@@ -88,15 +84,6 @@ CREATE INDEX fki_id_departure_date_time
   ON flight
   USING btree
   (id_departure_date_time);
-
--- Index: fki_id_arrival_date_time
-
-DROP INDEX fki_id_arrival_date_time;
-
-CREATE INDEX fki_id_arrival_date_time
-  ON flight
-  USING btree
-  (id_arrival_date_time);
 
 -- Table: booking_agent
 
@@ -363,6 +350,5 @@ INSERT INTO reservation(id_agent, id_passenger, id_reservation_status, id_travel
  ( 2, 22, 1, 3, 225, 4, 74, 1, 3);
 
 
-INSERT INTO flight(id_origin_airport, id_destination_airport, id_departure_date_time, id_arrival_date_time, flight_cost)
- VALUES (1, 2, 3, 3, 500), (1, 2, 305, 305, 800), (2, 1, 57, 57, 600), (1, 2, 67, 67, 200), (2, 1, 170, 170, 450), (3, 2, 267, 267, 800),
- (1, 3, 50, 50, 500), (1, 3, 225, 225, 650), (1, 3, 15, 15, 500), (2, 3, 506, 506, 200);
+INSERT INTO flight(id_origin_airport, id_destination_airport, id_departure_date_time, flight_cost)
+ VALUES (1, 2, 3, 500), (1, 2, 305, 800), (2, 1, 57, 600), (1, 2, 67, 200), (2, 1, 170, 450), (3, 2, 267, 800), (1, 3, 50, 500), (1, 3, 225, 650), (1, 3, 15, 500), (2, 3, 506, 200);
