@@ -112,9 +112,23 @@
     </VirtualCubeDimension>
     <VirtualCubeDimension name="Airport Destination">
     </VirtualCubeDimension>
+    <VirtualCubeDimension cubeName="Reservation" name="Passenger">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension cubeName="Reservation" name="Booking Agent">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension cubeName="Reservation" name="Status">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension cubeName="Reservation" name="Travel Class">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension cubeName="Flight" name="Departure date">
+    </VirtualCubeDimension>
     <VirtualCubeMeasure cubeName="Reservation" name="[Measures].[Total payment amount]" visible="true">
     </VirtualCubeMeasure>
     <VirtualCubeMeasure cubeName="Flight" name="[Measures].[Total flight cost]" visible="true">
+    </VirtualCubeMeasure>
+    <VirtualCubeMeasure cubeName="Reservation" name="[Measures].[Total passengers]" visible="true">
+    </VirtualCubeMeasure>
+    <VirtualCubeMeasure cubeName="Reservation" name="[Measures].[Total reservations]" visible="true">
     </VirtualCubeMeasure>
     <CalculatedMember name="Benefit" formatString="" formula="[Measures].[Total payment amount]-[Measures].[Total flight cost]" dimension="Measures" visible="true">
     </CalculatedMember>
