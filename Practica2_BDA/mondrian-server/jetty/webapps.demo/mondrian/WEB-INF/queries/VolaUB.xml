@@ -13,11 +13,23 @@
       </Level>
     </Hierarchy>
   </Dimension>
-  <Dimension type="StandardDimension" visible="true" name="Airport">
-    <Hierarchy name="Airport" visible="true" hasAll="true">
+  <Dimension type="StandardDimension" visible="true" name="Airport Origin">
+    <Hierarchy name="Airport origin" visible="true" hasAll="true">
       <Table name="airport" schema="public" alias="">
       </Table>
-      <Level name="Aiport" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+      <Level name="Aiport Origin" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
+        <Property name="Location" column="airport_location">
+        </Property>
+        <Property name="Other details" column="other_airport_details">
+        </Property>
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Airport Destination">
+    <Hierarchy name="Airport Destination" visible="true" hasAll="true">
+      <Table name="airport" schema="public">
+      </Table>
+      <Level name="Airport Destination" visible="true" table="airport" column="id_airport" nameColumn="airport_code" uniqueMembers="false">
         <Property name="Location" column="airport_location">
         </Property>
         <Property name="Other details" column="other_airport_details">
@@ -72,9 +84,9 @@
     </Dimension>
     <DimensionUsage source="Date" name="Made date" visible="true" foreignKey="id_date_reserv_made">
     </DimensionUsage>
-    <DimensionUsage source="Airport" name="Airport Origin" visible="true" foreignKey="id_origin_airport">
+    <DimensionUsage source="Airport Origin" name="Airport Origin" visible="true" foreignKey="id_origin_airport">
     </DimensionUsage>
-    <DimensionUsage source="Airport" name="Airport Destination" visible="true" foreignKey="id_destination_airport">
+    <DimensionUsage source="Airport Destination" name="Airport Destination" visible="true" foreignKey="id_destination_airport">
     </DimensionUsage>
     <Measure name="Total reservations" column="id_reservation" datatype="Integer" aggregator="distinct count" visible="true">
     </Measure>
@@ -88,9 +100,9 @@
     </Table>
     <DimensionUsage source="Date" name="Departure date" visible="true" foreignKey="id_departure_date_time">
     </DimensionUsage>
-    <DimensionUsage source="Airport" name="Airport Origin" visible="true" foreignKey="id_origin_airport">
+    <DimensionUsage source="Airport Origin" name="Airport Origin" visible="true" foreignKey="id_origin_airport">
     </DimensionUsage>
-    <DimensionUsage source="Airport" name="Airport Destination" visible="true" foreignKey="id_destination_airport">
+    <DimensionUsage source="Airport Destination" name="Airport Destination" visible="true" foreignKey="id_destination_airport">
     </DimensionUsage>
     <Measure name="Total flight cost" column="flight_cost" aggregator="sum" visible="true">
     </Measure>
