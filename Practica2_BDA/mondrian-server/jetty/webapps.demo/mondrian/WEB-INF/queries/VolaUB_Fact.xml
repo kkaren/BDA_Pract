@@ -59,15 +59,15 @@
       </Hierarchy>
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="id_flight" highCardinality="false" name="Flight">
-      <Hierarchy name="Flight" visible="true" hasAll="true">
+      <Hierarchy name="Flight" visible="true" hasAll="true" primaryKey="id_flight">
         <Table name="flight" schema="public">
         </Table>
-        <Level name="Airport Origin" visible="true" table="flight" column="id_origin_airport" nameColumn="airport_origin_code" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="IfParentsName">
+        <Level name="Airport Origin" visible="true" table="flight" column="id_origin_airport" nameColumn="airport_origin_code" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
           <Property name="Location" column="airport_origin_location" type="String">
           </Property>
         </Level>
-        <Level name="Airport Destination" visible="true" table="flight" column="id_destination_airport" nameColumn="airport_destination_code" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
-          <Property name="Location" column="airport_destination_location">
+        <Level name="Airport Destination" visible="true" table="flight" column="id_destination_airport" nameColumn="airport_destination_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+          <Property name="Location" column="airport_destination_location" type="String">
           </Property>
         </Level>
       </Hierarchy>
