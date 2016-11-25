@@ -7,6 +7,6 @@
 --%>
 
 
-<jp:mondrianQuery id="query01" jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost:5432/VolaUB" catalogUri="/WEB-INF/queries/VolaUB.xml"  jdbcUser="postgres" jdbcPassword="db1" connectionPooling="false">select {[Measures].[Total reservations], [Measures].[Total passengers], [Measures].[Total payment amount]} on columns, [passenger] on rows from Reservation</jp:mondrianQuery>
+<jp:mondrianQuery id="query01" jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost:5432/VolaUB" catalogUri="/WEB-INF/queries/VolaUB.xml"  jdbcUser="postgres" jdbcPassword="db1" connectionPooling="false">select {[Measures].[Total reservations], [Measures].[Total passengers], [Measures].[Total payment amount]} on columns, [passenger] on rows from [Flight Reservation]</jp:mondrianQuery>
 
 <c:set var="title01" scope="session">Arrows</c:set>
