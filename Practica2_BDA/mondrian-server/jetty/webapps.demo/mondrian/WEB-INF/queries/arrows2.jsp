@@ -9,4 +9,4 @@
 
 <jp:mondrianQuery id="query01" jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost:5432/VolaUB" catalogUri="/WEB-INF/queries/VolaUB.xml"  jdbcUser="postgres" jdbcPassword="db1" connectionPooling="false">select {[Measures].[Total flights cost]} on columns, [Airport Origin] on rows from [Flight]</jp:mondrianQuery>
 
-<c:set var="title01" scope="session">Arrows</c:set>
+<c:set var="title01" scope="session">Flight</c:set>
